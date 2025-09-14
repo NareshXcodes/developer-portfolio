@@ -218,8 +218,8 @@ This project is open source and available under the [MIT License](LICENSE).
 
 - **GitHub**: [@NareshXcodes](https://github.com/NareshXcodes)
 - **LinkedIn**: [Connect with me](https://linkedin.com/in/naresh-mahapatra)
-- **Email**: [naresh.mahapatra@example.com](mailto:naresh.mahapatra@example.com)
-- **Portfolio**: [Live Website](https://github.com/NareshXcodes/developer-portfolio)
+- **Email**: [naresh.mahapatra@example.com](mailto:codes.xdev@gmail.com)
+- **Portfolio**: [Live Website](https://portfolio-alpha-smoky-5qnbw7i5xz.vercel.app/)
 
 ---
 
