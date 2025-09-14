@@ -38,6 +38,9 @@
 
 .IconGradient{
   background: linear-gradient(120deg , #FDFDFD 100%, #FFFFFF 18%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @keyframes scroll-x {

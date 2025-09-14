@@ -12,7 +12,7 @@ const Skill = () => {
       </div>
       
       <div className="relative z-10 text-center">
-        <h4 className="SecondaryFont text-transparent bg-gradient-to-r from-[#FF8660] via-[#9A33FF] to-[#5BADFF] bg-clip-text text-4xl font-bold mb-4 tracking-wider">
+        <h4 className="PrimaryFont text-transparent IconGradient bg-clip-text text-4xl font-bold mb-4 tracking-wider">
           EXPERIENCED WITH
         </h4>
         <div className="w-24 h-1 bg-gradient-to-r from-[#FF8660] to-[#9A33FF] mx-auto mb-12 rounded-full"></div>
