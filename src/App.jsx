@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Footer from './Components/Footer.jsx';
 import Home from './Pages/Home.jsx';
 import Skill from './Pages/Skill.jsx';
-
+import Project from './Pages/Project.jsx';
 function App() {
 
   return (
@@ -14,6 +14,7 @@ function App() {
       <Navbar />
       <Home />
       <Skill />
+      <Project />
       {/* <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
