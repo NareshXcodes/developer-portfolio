@@ -1,21 +1,117 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useState } from 'react'
+import { FaBars, FaTimes } from 'react-icons/fa'
 import nameLogo from './../assets/logo1.png';
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
+
+  const closeMenu = () => {
+    setIsMenuOpen(false)
+  }
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+    closeMenu()
+  }
+
   return (
-    <div className="w-full h-18 flex items-center border-white bg-[#222222] relative fixed ">
-        <h1 className="PrimaryGradient PrimaryFont text-3xl font-bold ml-5 mr-2 ">Naresh.</h1>
-        <img className="h-15 w-15 rounded-full m-0 p-0" src={nameLogo}/>
-        <div className="flex justify-end w-full">
-          <NavLink to="/" className="text-white SecondaryFont text-xl font-semibold p-5 m-5 hover:scale-110 hover:underline underline-offset-8 decoration-2 decoration-blue-500 transition-all duration-300 ease-in-out">Home</NavLink>
-          <NavLink to="/About" className="text-white SecondaryFont text-xl font-semibold p-5 m-5 hover:scale-110 hover:underline underline-offset-8 decoration-2 decoration-blue-500 transition-all duration-300 ease-in-out">About</NavLink>
-          <NavLink to="/Skills" className="text-white SecondaryFont text-xl font-semibold p-5 m-5 hover:scale-110 hover:underline underline-offset-8 decoration-2 decoration-blue-500 transition-all duration-300 ease-in-out">Skills</NavLink>
-          <NavLink to="/Projects" className="text-white SecondaryFont text-xl font-semibold p-5 m-5 hover:scale-110 hover:underline underline-offset-8 decoration-2 decoration-blue-500 transition-all duration-300 ease-in-out">Projects</NavLink>
-          <NavLink to="/Contact" className="text-white SecondaryFont text-xl font-semibold p-5 m-5 hover:scale-110 hover:underline underline-offset-8 decoration-2 decoration-blue-500 transition-all duration-300 ease-in-out">Contact</NavLink>
+    <nav className="w-full h-16 flex items-center justify-between bg-black/30 backdrop-blur-md border-none border-white/10 fixed top-0 z-50 px-4 lg:px-6">
+      {/* Logo Section */}
+      <div className="flex items-center">
+        <img className="h-10 w-10 rounded-full" src={nameLogo} alt="Naresh Logo" />
+        <h1 className="PrimaryGradient PrimaryFont text-2xl lg:text-3xl font-bold ml-3">
+          Naresh.
+        </h1>
+      </div>
+
+      {/* Desktop Navigation */}
+      <div className="hidden md:flex items-center space-x-1">
+        <button 
+          onClick={() => scrollToSection('home')}
+          className="text-white SecondaryFont text-lg font-medium px-4 py-2 rounded-lg hover:bg-white/10 hover:text-blue-400 transition-all duration-300"
+        >
+          Home
+        </button>
+        <button 
+          onClick={() => scrollToSection('about')}
+          className="text-white SecondaryFont text-lg font-medium px-4 py-2 rounded-lg hover:bg-white/10 hover:text-blue-400 transition-all duration-300"
+        >
+          About
+        </button>
+        <button 
+          onClick={() => scrollToSection('skills')}
+          className="text-white SecondaryFont text-lg font-medium px-4 py-2 rounded-lg hover:bg-white/10 hover:text-blue-400 transition-all duration-300"
+        >
+          Skills
+        </button>
+        <button 
+          onClick={() => scrollToSection('projects')}
+          className="text-white SecondaryFont text-lg font-medium px-4 py-2 rounded-lg hover:bg-white/10 hover:text-blue-400 transition-all duration-300"
+        >
+          Projects
+        </button>
+        <button 
+          onClick={() => scrollToSection('contact')}
+          className="text-white SecondaryFont text-lg font-medium px-4 py-2 rounded-lg hover:bg-white/10 hover:text-blue-400 transition-all duration-300"
+        >
+          Contact
+        </button>
+      </div>
+
+      {/* Mobile Menu Button */}
+      <button
+        className="md:hidden text-white text-xl p-2 hover:bg-white/10 rounded-lg transition-colors duration-300"
+        onClick={toggleMenu}
+        aria-label="Toggle menu"
+      >
+        {isMenuOpen ? <FaTimes /> : <FaBars />}
+      </button>
+
+      {/* Mobile Navigation Menu */}
+      {isMenuOpen && (
+        <div className="absolute top-16 left-0 w-full bg-black/95 backdrop-blur-md border-b border-white/10 md:hidden">
+          <div className="flex flex-col py-4">
+            <button 
+              onClick={() => scrollToSection('home')}
+              className="text-white SecondaryFont text-lg font-medium px-6 py-3 hover:bg-white/10 hover:text-blue-400 transition-all duration-300 text-left"
+            >
+              Home
+            </button>
+            <button 
+              onClick={() => scrollToSection('about')}
+              className="text-white SecondaryFont text-lg font-medium px-6 py-3 hover:bg-white/10 hover:text-blue-400 transition-all duration-300 text-left"
+            >
+              About
+            </button>
+            <button 
+              onClick={() => scrollToSection('skills')}
+              className="text-white SecondaryFont text-lg font-medium px-6 py-3 hover:bg-white/10 hover:text-blue-400 transition-all duration-300 text-left"
+            >
+              Skills
+            </button>
+            <button 
+              onClick={() => scrollToSection('projects')}
+              className="text-white SecondaryFont text-lg font-medium px-6 py-3 hover:bg-white/10 hover:text-blue-400 transition-all duration-300 text-left"
+            >
+              Projects
+            </button>
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="text-white SecondaryFont text-lg font-medium px-6 py-3 hover:bg-white/10 hover:text-blue-400 transition-all duration-300 text-left"
+            >
+              Contact
+            </button>
+          </div>
         </div>
-        
-    </div>
+      )}
+    </nav>
   )
 }
 
