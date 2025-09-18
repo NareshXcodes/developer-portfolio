@@ -10,7 +10,7 @@ const Project = () => {
       repoLink: "https://github.com/NareshXcodes/developer-portfolio", // Replace with your repo link
       liveLink: "", // Add if you have a live demo
       technologies: ["React", "Vite", "Tailwind CSS", "JavaScript"],
-      stars: 0,
+      stars: 3,
       forks: 0
     },
     {
