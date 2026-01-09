@@ -12,7 +12,7 @@ import Contact from './Pages/Contact.jsx';
 
 
 function App() {
-
+  const skills= ["cpp","c","py","java","androidstudio","git","github","html","js","react","tailwind","npm","materialui","firebase","aws","obsidian"] 
   return (
     <div className="w-screen">
       <BrowserRouter>
@@ -25,7 +25,7 @@ function App() {
             <About />
           </section>
           <section id="skills">
-            <Skill />
+            <Skill skills={skills}/>
           </section>
           <section id="projects">
             <Project />
