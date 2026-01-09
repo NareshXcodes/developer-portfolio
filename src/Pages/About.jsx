@@ -61,7 +61,6 @@ const About = () => {
             <h1 className="BlueGradient text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center lg:text-center PrimaryFont">
               EXPERIENCE
             </h1>
-            
             <div 
               className="flex flex-col gap-4 sm:gap-6 max-h-80 sm:max-h-96 overflow-y-auto scroll-smooth hide-scrollbar pr-2"
             >
