@@ -25,7 +25,7 @@ const Skill = ({skills}) => {
         <div className="flex flex-row flex-nowrap gap-12 animate-scroll-x min-w-max py-8">
           {skills.map((skill,index)=>(
             <div key={index} className="group flex flex-col items-center gap-3 transform hover:scale-110 transition-all duration-300">
-            <div className="p-4 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-indigo-950/30 rounded-xl backdrop-blur-sm border-none shadow-lg group-hover:shadow-purple-500/40 transition-shadow duration-300">
+            <div className="p-4 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-indigo-950/30 rounded-xl backdrop-blur-sm border-none shadow-lg group-hover:shadow-blue-500/40 transition-shadow duration-300">
               <a href="https://skillicons.dev">
                 <img src={`https://skillicons.dev/icons?i=${skill}`} width="60" height="60" alt={skill} />
               </a>
