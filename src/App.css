@@ -4,7 +4,8 @@
 
 
 .PrimaryFont {
-    font-family: 'Montserrat', serif;
+    font-family: 'Montserrat',serif;
+    font-style: italic;
 }
 
 .SecondaryFont {
