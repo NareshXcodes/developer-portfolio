@@ -1,15 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
 @import "tailwindcss";
 
 
 .PrimaryFont {
-    font-family: 'Montserrat',serif;
+  font-family: 'Playfair Display', 'Montserrat', serif;
     font-style: italic;
 }
 
 .SecondaryFont {
-    font-family: 'Roboto Flex', sans-serif;
+  font-family: 'Manrope', 'Roboto Flex', sans-serif;
 }
 
 *{
@@ -103,4 +105,25 @@
   animation-delay: 0.6s;
   opacity: 0;
   animation-fill-mode: forwards;
+}
+
+.project-3d-track {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.project-3d-card {
+  transform-style: preserve-3d;
+  perspective: 1200px;
+  will-change: transform;
+}
+
+.project-3d-orb {
+  will-change: transform;
+}
+
+.project-3d-scene {
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
 }

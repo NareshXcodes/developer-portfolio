@@ -1,26 +1,20 @@
 import React from "react";
-import avatar from "./../assets/avatar.png";
+import avatar from "./../assets/avatar.jpeg";
 import HomeBackground from './../Components/HomeBackground.jsx';
 
 const Home = () => {
   return (
     <div style={{ width: '100%', height: '98vh', position: 'relative' }}>
       <HomeBackground
-        mouseRepulsion={false}
-        mouseInteraction
-        density={1.1}
-        glowIntensity={0.4}
-        saturation={0.7}
-        hueShift={200}
-        twinkleIntensity={0.5}
-        rotationSpeed={0.1}
-        repulsionStrength={2}
-        autoCenterRepulsion={0}
-        starSpeed={1.1}
-        speed={0.6}
-        style={{
-          background: 'linear-gradient(to bottom right, #0a0a0a, #161513, #1a1a1a)'
-        }}
+        animationType="rotate"
+        timeScale={0.5}
+        height={2}
+        baseWidth={3}
+        scale={2.7}
+        hueShift={0}
+        colorFrequency={2.5}
+        noise={0}
+        glow={1.5}
       >
         <div className="min-h-screen w-screen relative overflow-hidden pt-20">
           <div className="flex items-center justify-center h-full py-16">
