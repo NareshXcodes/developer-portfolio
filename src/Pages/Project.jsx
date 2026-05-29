@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import BounceCards from '../Components/BounceCards'
+import Globe from '../Components/Globe'
 import ProjectCard from '../Components/ProjectCard'
 
 const Project = () => {
@@ -87,6 +88,15 @@ const Project = () => {
               'radial-gradient(circle at 15% 20%, rgba(255,134,96,0.18), transparent 45%), radial-gradient(circle at 85% 10%, rgba(154,51,255,0.16), transparent 40%), radial-gradient(circle at 70% 80%, rgba(91,173,255,0.14), transparent 45%)'
           }}
         />
+        <div className="absolute bottom-0 left-1/2 w-[60vw] min-w-[320px] max-w-[800px] -translate-x-1/2 opacity-100">
+          <div className="relative w-full overflow-hidden rounded-t-[999px] aspect-[2/1]">
+            <div className="absolute left-0 top-0 w-full aspect-square">
+              <div className="relative h-full w-full">
+                <Globe className="mix-blend-screen max-w-none" />
+              </div>
+            </div>
+          </div>
+        </div>
         <div
           className="project-3d-orb absolute -top-24 left-8 h-64 w-64 rounded-full bg-[#FF8660]/20 blur-3xl"
         />

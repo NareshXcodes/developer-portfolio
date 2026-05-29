@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css'
 import Navbar from './Components/Navbar.jsx';
+import SmoothCursor from './Components/SmoothCursor.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Footer from './Components/Footer.jsx';
 import Home from './Pages/Home.jsx';
@@ -16,6 +17,7 @@ function App() {
   return (
     <div className="w-screen">
       <BrowserRouter>
+        <SmoothCursor />
         <Navbar />
         <div className="smooth-scroll">
           <section id="home">
