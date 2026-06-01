@@ -12,7 +12,48 @@ const Contact = lazy(() => import('./Pages/Contact.jsx'));
 
 
 
-const SKILLS = ["cpp","py","java","git","github","js","react","tailwind","firebase","aws"]
+const SKILLS = ["cpp","py","java","git","github","js","react","tailwind","firebase","aws" , "fastapi"]
+
+const sectionFallbackStyle = {
+  minHeight: '60vh',
+  width: '100%',
+};
+
+const hasWindow = typeof window !== 'undefined';
+
+function scheduleIdleTask(callback) {
+  if (hasWindow && 'requestIdleCallback' in window) {
+    return window.requestIdleCallback(callback);
+  }
+
+  return globalThis.setTimeout(callback, 200);
+}
+
+function cancelIdleTask(handle) {
+  if (hasWindow && 'cancelIdleCallback' in window) {
+    window.cancelIdleCallback(handle);
+    return;
+  }
+
+  globalThis.clearTimeout(handle);
+}
+
+function SectionFallback() {
+  return <section aria-hidden="true" style={sectionFallbackStyle} />;
+}
+
+function useWarmLazySections() {
+  useEffect(() => {
+    const handle = scheduleIdleTask(() => {
+      void import('./Pages/About.jsx');
+      void import('./Pages/Skill.jsx');
+      void import('./Pages/Project.jsx');
+      void import('./Pages/Contact.jsx');
+    });
+
+    return () => cancelIdleTask(handle);
+  }, []);
+}
 
 function LazySection({ id, children, rootMargin = '400px', eager = false }) {
   const [isVisible, setIsVisible] = useState(eager);
@@ -56,6 +97,8 @@ function LazySection({ id, children, rootMargin = '400px', eager = false }) {
 }
 
 function App() {
+  useWarmLazySections();
+
   return (
     <div className="w-screen">
       <BrowserRouter>
@@ -65,23 +108,23 @@ function App() {
           <section id="home">
             <Home />
           </section>
-          <LazySection id="about">
-            <Suspense fallback={null}>
+          <LazySection id="about" rootMargin="240px 0px">
+            <Suspense fallback={<SectionFallback />}>
               <About />
             </Suspense>
           </LazySection>
-          <LazySection id="skills">
-            <Suspense fallback={null}>
+          <LazySection id="skills" rootMargin="240px 0px">
+            <Suspense fallback={<SectionFallback />}>
               <Skill skills={SKILLS} />
             </Suspense>
           </LazySection>
-          <LazySection id="projects">
-            <Suspense fallback={null}>
+          <LazySection id="projects" rootMargin="240px 0px">
+            <Suspense fallback={<SectionFallback />}>
               <Project />
             </Suspense>
           </LazySection>
-          <LazySection id="contact">
-            <Suspense fallback={null}>
+          <LazySection id="contact" rootMargin="240px 0px">
+            <Suspense fallback={<SectionFallback />}>
               <Contact />
             </Suspense>
           </LazySection>

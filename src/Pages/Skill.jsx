@@ -1,37 +1,44 @@
-import React from "react";
-import {
-  SiAmazonwebservices,
-  SiCplusplus,
-  SiGit,
-  SiGithub,
-  SiJavascript,
-  SiOpenjdk,
-  SiPython,
-  SiReact,
-  SiTailwindcss,
-  SiFastapi
-} from "react-icons/si";
+import React, { useCallback } from "react";
 import LogoLoop from "../Components/LogoLoop.jsx";
 
 const Skill = ({ skills }) => {
-  const iconClass = "text-[#cdcdcd]";
+  const iconTheme = "dark";
   const iconMap = {
-    cpp: { node: <SiCplusplus className={iconClass} />, title: "C++" },
-    py: { node: <SiPython className={iconClass} />, title: "Python" },
-    java: { node: <SiOpenjdk className={iconClass} />, title: "Java" },
-    git: { node: <SiGit className={iconClass} />, title: "Git" },
-    github: { node: <SiGithub className={iconClass} />, title: "GitHub" },
-    js: { node: <SiJavascript className={iconClass} />, title: "JavaScript" },
-    react: { node: <SiReact className={iconClass} />, title: "React" },
-    tailwind: { node: <SiTailwindcss className={iconClass} />, title: "Tailwind CSS" },
-    aws: { node: <SiAmazonwebservices className={iconClass} />, title: "AWS" },
-    FastAPI: { node: <SiFastapi className={iconClass} />, title: "FastAPI" },
+    cpp: { icon: "cpp", title: "C++" },
+    py: { icon: "python", title: "Python" },
+    java: { icon: "java", title: "Java" },
+    git: { icon: "git", title: "Git" },
+    github: { icon: "github", title: "GitHub" },
+    js: { icon: "javascript", title: "JavaScript" },
+    react: { icon: "react", title: "React" },
+    tailwind: { icon: "tailwind", title: "Tailwind CSS" },
+    firebase: { icon: "firebase", title: "Firebase" },
+    aws: { icon: "aws", title: "AWS" },
+    fastapi: { icon: "fastapi", title: "fastapi" }
   };
 
   const logos = skills.map(skill => iconMap[skill]).filter(Boolean);
 
+  const renderSkillItem = useCallback(item => (
+    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5">
+      <img
+        src={`https://go-skill-icons.vercel.app/api/icons?i=${item.icon}&theme=${iconTheme}`}
+        alt={item.title}
+        width={32}
+        height={32}
+        loading="lazy"
+        decoding="async"
+        className="h-8 w-8 object-contain"
+        style={{ willChange: 'auto' }}
+      />
+      <span className="SecondaryFont text-xs uppercase tracking-wider text-[#cdcdcd]">
+        {item.title}
+      </span>
+    </div>
+  ), [iconTheme]);
+
   return (
-    <div className="h-screen w-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden">
+    <div className="h-screen w-screen flex flex-col justify-start items-center bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden p-20">
       {/* Background decorative elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl animate-pulse"></div>
@@ -50,10 +57,10 @@ const Skill = ({ skills }) => {
           logos={logos}
           speed={90}
           direction="left"
-          logoHeight={60}
-          gap={48}
-          hoverSpeed={0}
-          scaleOnHover
+          logoHeight={34}
+          gap={24}
+          hoverSpeed={40}
+          renderItem={renderSkillItem}
           fadeOut
           fadeOutColor="#0a0a0a"
           ariaLabel="Technology skills"

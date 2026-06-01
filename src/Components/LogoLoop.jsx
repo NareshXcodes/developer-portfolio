@@ -359,6 +359,23 @@ export const LogoLoop = memo(
       [copyCount, logos, renderLogoItem, isVertical]
     );
 
+    const fadeMaskStyle = useMemo(() => {
+      if (!fadeOut) return null;
+
+      const gradient = isVertical
+        ? 'linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%)'
+        : 'linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%)';
+
+      return {
+        WebkitMaskImage: gradient,
+        maskImage: gradient,
+        WebkitMaskSize: '100% 100%',
+        maskSize: '100% 100%',
+        WebkitMaskRepeat: 'no-repeat',
+        maskRepeat: 'no-repeat'
+      };
+    }, [fadeOut, isVertical]);
+
     const containerStyle = useMemo(
       () => ({
         width: isVertical
@@ -367,9 +384,10 @@ export const LogoLoop = memo(
             : toCssLength(width)
           : toCssLength(width) ?? '100%',
         ...cssVariables,
+        ...(fadeMaskStyle ?? {}),
         ...style
       }),
-      [width, cssVariables, style, isVertical]
+      [width, cssVariables, fadeMaskStyle, style, isVertical]
     );
 
     return (
@@ -382,50 +400,6 @@ export const LogoLoop = memo(
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {fadeOut && (
-          <>
-            {isVertical ? (
-              <>
-                <div
-                  aria-hidden
-                  className={cx(
-                    'pointer-events-none absolute inset-x-0 top-0 z-10',
-                    'h-[clamp(24px,8%,120px)]',
-                    'bg-[linear-gradient(to_bottom,var(--logoloop-fadeColor,var(--logoloop-fadeColorAuto))_0%,rgba(0,0,0,0)_100%)]'
-                  )}
-                />
-                <div
-                  aria-hidden
-                  className={cx(
-                    'pointer-events-none absolute inset-x-0 bottom-0 z-10',
-                    'h-[clamp(24px,8%,120px)]',
-                    'bg-[linear-gradient(to_top,var(--logoloop-fadeColor,var(--logoloop-fadeColorAuto))_0%,rgba(0,0,0,0)_100%)]'
-                  )}
-                />
-              </>
-            ) : (
-              <>
-                <div
-                  aria-hidden
-                  className={cx(
-                    'pointer-events-none absolute inset-y-0 left-0 z-10',
-                    'w-[clamp(24px,8%,120px)]',
-                    'bg-[linear-gradient(to_right,var(--logoloop-fadeColor,var(--logoloop-fadeColorAuto))_0%,rgba(0,0,0,0)_100%)]'
-                  )}
-                />
-                <div
-                  aria-hidden
-                  className={cx(
-                    'pointer-events-none absolute inset-y-0 right-0 z-10',
-                    'w-[clamp(24px,8%,120px)]',
-                    'bg-[linear-gradient(to_left,var(--logoloop-fadeColor,var(--logoloop-fadeColorAuto))_0%,rgba(0,0,0,0)_100%)]'
-                  )}
-                />
-              </>
-            )}
-          </>
-        )}
-
         <div
           className={cx(
             'flex will-change-transform select-none relative z-0',
