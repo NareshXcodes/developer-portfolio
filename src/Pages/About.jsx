@@ -1,5 +1,6 @@
 import React from "react";
 import ExpCard from './../Components/ExperiencCard.jsx';
+import ScrollStack, { ScrollStackItem } from '../Components/ScrollStack.jsx';
 import awsLogo from './../assets/aws-logo.png';
 import webLogo from './../assets/web-logo.png';
 
@@ -20,7 +21,7 @@ const About = () => {
     }
   ]
   return (
-    <div className="min-h-screen w-screen bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden pt-20 border-t">
+    <div className="min-h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden pt-20 border-t">
       {/* Header */}
       <div className="text-center mb-8 md:mb-12">
         <h1 className="PrimaryFont OrangeGradient text-3xl sm:text-4xl font-bold">
@@ -33,26 +34,8 @@ const About = () => {
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
           {/* About Text Section */}
           <div className="flex-1 w-full lg:w-auto">
-            <p className="SecondaryFont text-left IconGradient text-base sm:text-lg leading-relaxed">
-              I am a second-year B.Tech student specializing in Android development
-              with expertise in <b className="BlueGradient">Kotlin</b> and{" "}
-              <b className="BlueGradient">Jetpack Compose</b>. My technical
-              foundation encompasses{" "}
-              <b>
-                <i className="BlueGradient">Mobile Development</i>
-              </b>
-              ,{" "}
-              <b>
-                <i className="BlueGradient">Frontend technologies</i>
-              </b>{" "}
-              including <b>React</b>
-              and <b>Tailwind CSS</b>, and <b>Cloud platforms</b> gained through{" "}
-              <b className="OrangeGradient">AWS internship</b>
-              experience and <b>Firebase</b> integration. I focus on delivering
-              clean, scalable code and thrive in cross-functional teams where I can
-              drive measurable impact. My approach combines strong data structures
-              and algorithms fundamentals with practical development experience to
-              create maintainable mobile solutions.
+            <p className="SecondaryFont text-left IconGradient text-base sm:text-lg leading-relaxed mt-10 tracking-wider font-bold justify-center items-center">
+              Backend-focused Computer Science student with hands-on experience building full-stack and security-focused applications using <span className="PrimaryFont PrimaryGradient text-md">FastAPI, Python, PostgreSQL, SQLAlchemy </span>,<span className="PrimaryFont BlueGradient text-md">React.js </span>, and <span className="PrimaryFont OrangeGradient text-md">AWS services</span>. Completed an AWS internship and developed production-oriented projects including Orbital Guardian, a threat intelligence and risk assessment platform, and a Personal Finance Manager API. Skilled in REST API development, database design, cloud deployment, frontend-backend integration, and modern software engineering practices. Strong foundation in Data Structures & Algorithms and passionate about building scalable backend systems and solving real-world problems through technology.
             </p>
           </div>
 
@@ -61,19 +44,27 @@ const About = () => {
             <h1 className="BlueGradient text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center lg:text-center PrimaryFont">
               EXPERIENCE
             </h1>
-            <div 
-              className="flex flex-col gap-4 sm:gap-6 max-h-80 sm:max-h-96 overflow-y-auto scroll-smooth hide-scrollbar pr-2"
+            <ScrollStack
+              className="w-full h-[20rem] sm:h-96 hide-scrollbar"
+              itemDistance={100}
+              itemScale={0.03}
+              itemStackDistance={50}
+              stackPosition="20%"
+              scaleEndPosition="0%"
+              baseScale={0.85}
+              useWindowScroll={false}
             >
               {expCards.map((de, index) => (
-                <ExpCard
-                  key={index}
-                  title={de.title}
-                  description={de.description}
-                  company={de.company}
-                  time={de.time}
-                />
+                <ScrollStackItem key={index} itemClassName="mb-4">
+                  <ExpCard
+                    title={de.title}
+                    description={de.description}
+                    company={de.company}
+                    time={de.time}
+                  />
+                </ScrollStackItem>
               ))}
-            </div>
+            </ScrollStack>
           </div>
         </div>
       </div>

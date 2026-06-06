@@ -1,7 +1,6 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import './App.css'
 import Navbar from './Components/Navbar.jsx';
-import SmoothCursor from './Components/SmoothCursor.jsx';
 import { BrowserRouter } from 'react-router-dom'
 import Footer from './Components/Footer.jsx';
 import Home from './Pages/Home.jsx';
@@ -12,7 +11,7 @@ const Contact = lazy(() => import('./Pages/Contact.jsx'));
 
 
 
-const SKILLS = ["cpp","py","java","git","github","js","react","tailwind","firebase","aws" , "fastapi"]
+const SKILLS = ["cpp","py","java","git","github","js","react","tailwind","postgres","nodejs","supabase","aws" , "fastapi"]
 
 const sectionFallbackStyle = {
   minHeight: '60vh',
@@ -100,11 +99,10 @@ function App() {
   useWarmLazySections();
 
   return (
-    <div className="w-screen">
+    <div className="w-full min-h-screen overflow-x-hidden">
       <BrowserRouter>
-        <SmoothCursor />
         <Navbar />
-        <div className="smooth-scroll">
+        <main>
           <section id="home">
             <Home />
           </section>
@@ -128,7 +126,7 @@ function App() {
               <Contact />
             </Suspense>
           </LazySection>
-        </div>
+        </main>
         <Footer />
       </BrowserRouter>
     </div>

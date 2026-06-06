@@ -42,7 +42,7 @@ const Contact = () => {
   ]
 
   return (
-    <div className="min-h-screen w-screen bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] pt-20">
+    <div className="min-h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] pt-20">
       <div className="max-w-4xl mx-auto px-6 py-16">
         
         {/* Header */}

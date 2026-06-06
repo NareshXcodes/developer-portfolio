@@ -12,9 +12,11 @@ const Skill = ({ skills }) => {
     js: { icon: "javascript", title: "JavaScript" },
     react: { icon: "react", title: "React" },
     tailwind: { icon: "tailwind", title: "Tailwind CSS" },
-    firebase: { icon: "firebase", title: "Firebase" },
+    supabase: { icon: "supabase", title: "Supabase" },
+    postgres: { icon: "postgresql", title: "PostgreSQL" },
+    nodejs: { icon: "nodejs", title: "Node.js" },
     aws: { icon: "aws", title: "AWS" },
-    fastapi: { icon: "fastapi", title: "fastapi" }
+    fastapi: { icon: "fastapi", title: "FastAPI" }
   };
 
   const logos = skills.map(skill => iconMap[skill]).filter(Boolean);
@@ -38,11 +40,11 @@ const Skill = ({ skills }) => {
   ), [iconTheme]);
 
   return (
-    <div className="h-screen w-screen flex flex-col justify-start items-center bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden p-20">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 left-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    <div className="min-h-screen w-full flex flex-col justify-start items-center bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden p-20">
+      {/* Background decorative elements - optimized for lag-free performance */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
+        <div className="absolute top-10 left-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-10 text-center">

@@ -7,51 +7,30 @@ const Project = () => {
   const sectionRef = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
 
-  // Sample project data - replace with your actual projects
-  const projects = [
-    {
-      title: "Portfolio Website",
-      description: "A modern, responsive portfolio website built with React and Vite, showcasing my skills and projects with glassmorphism effects and smooth animations.",
-      repoLink: "https://github.com/NareshXcodes/developer-portfolio", // Replace with your repo link
-      liveLink: "", // Add if you have a live demo
-      technologies: ["React", "Vite", "Tailwind CSS", "JavaScript"],
-      stars: 3,
-      forks: 0
-    },
-    {
-      title: "Shopping List App",
-      description: "A simple and user-friendly Shopping List App built with Kotlin and Jetpack Compose. It allows users to quickly add, edit, and delete items with a clean Material 3 interface. Optimized for both light and dark mode, this app is designed for ease of use and modern Android development practices.",
-      repoLink: "https://github.com/NareshXcodes/Android-shopping-list-app.git", // Replace with your repo link
-      liveLink: "", // Add if you have a live demo
-      technologies: ["Kotlin", "Jetpack Compose"],
-      stars: 0,
-      forks: 0
-    },
-    {
-      title: "Food Recipe App",
-      description: "Food Recipe App A modern Android app built with Jetpack Compose, showcasing food categories using TheMealDB API. Features Material Design 3, MVVM architecture, Retrofit, and Coil for image loading.",
-      repoLink: "https://github.com/NareshXcodes/Android-Food-Recipe-App.git", // Replace with your repo link
-      liveLink: "", // Add if you have a live demo
-      technologies: ["Kotlin", "Jetpack compose", "MealDB"],
-      stars: 0,
-      forks: 0
-    },
-    {
-      title: "Smart Erp System",
-      description: "Build a complete ERP system for college management with features like attendance, notes, assignments, and more.",
-      repoLink: "https://github.com/vinit-codes/CampusOS.git", // Replace with your repo link
-      liveLink: "", // Add if you have a live demo
-      technologies: ["React", "Material UI", "Tailwind CSS" , "JavaScript"],
-      stars: 1,
-      forks: 0
-    }
-  ]
+  const [projects, setProjects] = useState([])
+
+  useEffect(() => {
+    fetch('https://api.github.com/users/NareshXcodes/repos?sort=updated&direction=desc&per_page=3')
+      .then((res) => res.json())
+      .then((data) => {
+        const fetchedProjects = data.map((repo) => ({
+          title: repo.name.replace(/[-_]/g, ' '),
+          description: repo.description || 'No description available.',
+          repoLink: repo.html_url,
+          liveLink: repo.homepage || '',
+          technologies: [repo.language, ...(repo.topics || [])].filter(Boolean).slice(0, 4),
+          stars: repo.stargazers_count,
+          forks: repo.forks_count,
+        }))
+        setProjects(fetchedProjects)
+      })
+      .catch((err) => console.error('Error fetching GitHub repos:', err))
+  }, [])
 
   const transformStyles = [
-    'rotate(-6deg) translate(-180px)',
-    'rotate(4deg) translate(-60px)',
-    'rotate(-4deg) translate(60px)',
-    'rotate(6deg) translate(180px)'
+    'rotate(-5deg) translate(-120px)',
+    'rotate(0deg) translate(0px)',
+    'rotate(5deg) translate(120px)'
   ]
 
   useEffect(() => {
@@ -78,7 +57,7 @@ const Project = () => {
   return (
     <div
       ref={sectionRef}
-      className="min-h-screen w-screen bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden pt-20"
+      className="min-h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden pt-20"
     >
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div
@@ -91,17 +70,17 @@ const Project = () => {
         <div className="absolute bottom-0 left-1/2 w-[60vw] min-w-[320px] max-w-[800px] -translate-x-1/2 opacity-100">
           <div className="relative w-full overflow-hidden rounded-t-[999px] aspect-[2/1]">
             <div className="absolute left-0 top-0 w-full aspect-square">
-              <div className="relative h-full w-full">
-                <Globe className="mix-blend-screen max-w-none" />
+              <div className="relative h-full w-full pointer-events-auto">
+                <Globe className="max-w-none opacity-80" />
               </div>
             </div>
           </div>
         </div>
         <div
-          className="project-3d-orb absolute -top-24 left-8 h-64 w-64 rounded-full bg-[#FF8660]/20 blur-3xl"
+          className="absolute -top-24 left-8 h-64 w-64 rounded-full bg-[#FF8660]/20 blur-3xl"
         />
         <div
-          className="project-3d-orb absolute bottom-0 right-0 h-72 w-72 rounded-full bg-[#9A33FF]/20 blur-3xl"
+          className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-[#9A33FF]/20 blur-3xl"
         />
       </div>
 
