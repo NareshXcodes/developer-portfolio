@@ -1,153 +1,77 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-
-const toCssLength = value => (typeof value === 'number' ? `${value}px` : value ?? undefined);
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function BounceCards({
   className = '',
-  images = [],
   items = [],
   renderItem,
-  containerWidth = 400,
-  containerHeight = 400,
-  animationDelay = 0.5,
-  animationStagger = 0.06,
-  easeType = 'elastic.out(1, 0.8)',
-  transformStyles = [
-    'rotate(10deg) translate(-170px)',
-    'rotate(5deg) translate(-85px)',
-    'rotate(-3deg)',
-    'rotate(-10deg) translate(85px)',
-    'rotate(2deg) translate(170px)'
-  ],
-  enableHover = false,
-  cardClassName = 'w-[200px] aspect-square border-8 border-white rounded-[30px] overflow-hidden',
-  cardStyle
+  containerWidth = 900,
+  containerHeight = 460,
 }) {
-  const containerRef = useRef(null);
-  const data = items.length ? items : images;
+  const [hoveredIdx, setHoveredIdx] = useState(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.card',
-        { scale: 0 },
-        {
-          scale: 1,
-          stagger: animationStagger,
-          ease: easeType,
-          delay: animationDelay
-        }
-      );
-    }, containerRef);
-    return () => ctx.revert();
-  }, [animationStagger, easeType, animationDelay, data.length]);
-
-  const getNoRotationTransform = transformStr => {
-    const hasRotate = /rotate\([\s\S]*?\)/.test(transformStr);
-    if (hasRotate) {
-      return transformStr.replace(/rotate\([\s\S]*?\)/, 'rotate(0deg)');
-    }
-    if (transformStr === 'none') {
-      return 'rotate(0deg)';
-    }
-    return `${transformStr} rotate(0deg)`;
-  };
-
-  const getPushedTransform = (baseTransform, offsetX) => {
-    const translateRegex = /translate\(([-0-9.]+)px\)/;
-    const match = baseTransform.match(translateRegex);
-    if (match) {
-      const currentX = parseFloat(match[1]);
-      const newX = currentX + offsetX;
-      return baseTransform.replace(translateRegex, `translate(${newX}px)`);
-    }
-    return baseTransform === 'none' ? `translate(${offsetX}px)` : `${baseTransform} translate(${offsetX}px)`;
-  };
-
-  const pushSiblings = hoveredIdx => {
-    if (!enableHover || !containerRef.current) return;
-
-    const q = gsap.utils.selector(containerRef);
-    data.forEach((_, i) => {
-      const selector = q(`.card-${i}`);
-      gsap.killTweensOf(selector);
-
-      const baseTransform = transformStyles[i] || 'none';
-
-      if (i === hoveredIdx) {
-        const noRotation = getNoRotationTransform(baseTransform);
-        gsap.to(selector, {
-          transform: noRotation,
-          duration: 0.4,
-          ease: 'back.out(1.4)',
-          overwrite: 'auto'
-        });
-      } else {
-        const offsetX = i < hoveredIdx ? -160 : 160;
-        const pushedTransform = getPushedTransform(baseTransform, offsetX);
-
-        const distance = Math.abs(hoveredIdx - i);
-        const delay = distance * 0.05;
-
-        gsap.to(selector, {
-          transform: pushedTransform,
-          duration: 0.4,
-          ease: 'back.out(1.4)',
-          delay,
-          overwrite: 'auto'
-        });
-      }
-    });
-  };
-
-  const resetSiblings = () => {
-    if (!enableHover || !containerRef.current) return;
-    const q = gsap.utils.selector(containerRef);
-    data.forEach((_, i) => {
-      const selector = q(`.card-${i}`);
-      gsap.killTweensOf(selector);
-
-      const baseTransform = transformStyles[i] || 'none';
-      gsap.to(selector, {
-        transform: baseTransform,
-        duration: 0.4,
-        ease: 'back.out(1.4)',
-        overwrite: 'auto'
-      });
-    });
-  };
+  // Default spreads and settings for the 3D stack effect
+  const spread = 150;
 
   return (
     <div
       className={`relative flex items-center justify-center ${className}`}
       style={{
-        width: toCssLength(containerWidth),
-        height: toCssLength(containerHeight)
+        width: typeof containerWidth === 'number' ? `${containerWidth}px` : containerWidth,
+        height: typeof containerHeight === 'number' ? `${containerHeight}px` : containerHeight,
       }}
-      ref={containerRef}
+      onMouseLeave={() => setHoveredIdx(null)}
     >
-      {data.map((item, idx) => {
-        const content = renderItem ? (
-          renderItem(item, idx)
-        ) : (
-          <img className="w-full h-full object-cover" src={item} alt={`card-${idx}`} />
-        );
+      {items.map((item, idx) => {
+        // Center index calculation for spreading items left/right
+        const centerIdx = Math.floor(items.length / 2);
+        const offset = idx - centerIdx; 
+        
+        let x = offset * spread; 
+        let rotate = offset * 5;
+        let zIndex = items.length - Math.abs(offset);
+        let scale = 1;
+        let y = 0;
+
+        if (hoveredIdx !== null) {
+          if (idx === hoveredIdx) {
+            x = offset * (spread - 40); // slightly pull towards center
+            rotate = 0;
+            zIndex = 50;
+            scale = 1.05;
+            y = -20; // lift up
+          } else {
+            const pushDir = idx < hoveredIdx ? -1 : 1;
+            x = offset * spread + (pushDir * 140); // push away
+            rotate = offset * 5 + (pushDir * 8);
+            zIndex = items.length - Math.abs(idx - hoveredIdx);
+          }
+        }
 
         return (
-          <div
+          <motion.div
             key={idx}
-            className={`card card-${idx} absolute ${cardClassName}`}
-            style={{
-              boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
-              transform: transformStyles[idx] || 'none',
-              ...cardStyle
+            className="absolute origin-bottom cursor-pointer"
+            initial={{ opacity: 0, y: 150, scale: 0.8, rotate: offset * 15 }}
+            animate={{ 
+              x, 
+              y,
+              rotate, 
+              scale,
+              opacity: 1,
+              zIndex 
             }}
-            onMouseEnter={() => pushSiblings(idx)}
-            onMouseLeave={resetSiblings}
+            transition={{
+              type: "spring",
+              stiffness: 260,
+              damping: 25,
+              mass: 1,
+              delay: hoveredIdx === null ? idx * 0.1 : 0, 
+            }}
+            onMouseEnter={() => setHoveredIdx(idx)}
           >
-            {content}
-          </div>
+            {renderItem ? renderItem(item, idx) : null}
+          </motion.div>
         );
       })}
     </div>

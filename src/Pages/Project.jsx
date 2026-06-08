@@ -10,7 +10,7 @@ const Project = () => {
   const [projects, setProjects] = useState([])
 
   useEffect(() => {
-    fetch('https://api.github.com/users/NareshXcodes/repos?sort=updated&direction=desc&per_page=3')
+    fetch('https://api.github.com/users/NareshXcodes/repos?sort=updated&direction=desc&per_page=4')
       .then((res) => res.json())
       .then((data) => {
         const fetchedProjects = data.map((repo) => ({
@@ -27,11 +27,7 @@ const Project = () => {
       .catch((err) => console.error('Error fetching GitHub repos:', err))
   }, [])
 
-  const transformStyles = [
-    'rotate(-5deg) translate(-120px)',
-    'rotate(0deg) translate(0px)',
-    'rotate(5deg) translate(120px)'
-  ]
+
 
   useEffect(() => {
     if (typeof window === 'undefined' || isVisible) return
@@ -111,14 +107,7 @@ const Project = () => {
                 />
               )}
               containerWidth={900}
-              containerHeight={460}
-              animationDelay={0.4}
-              animationStagger={0.08}
-              easeType="elastic.out(1, 0.6)"
-              transformStyles={transformStyles}
-              enableHover
-              cardClassName="w-[340px] sm:w-[360px] h-auto border-0 overflow-visible"
-              cardStyle={{ boxShadow: 'none' }}
+              containerHeight={520}
             />
           ) : (
             <div
