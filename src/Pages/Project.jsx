@@ -82,18 +82,18 @@ const Project = () => {
 
       <div className="relative z-10 w-full max-w-7xl mx-auto flex-1 flex flex-col min-h-0">
         {/* Header */}
-        <div className="text-center mb-8 flex-shrink-0">
-          <h1 className="OrangeGradient text-4xl font-bold mb-4 PrimaryFont tracking-wide">PROJECTS</h1>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto px-4 SecondaryFont">
+        <div className="text-center mb-2 md:mb-6 flex-shrink-0">
+          <h1 className="OrangeGradient text-4xl font-bold mb-2 md:mb-4 PrimaryFont tracking-wide">PROJECTS</h1>
+          <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto px-4 SecondaryFont">
             Here are some of my recent projects. Click on any card to view the repository on GitHub.
           </p>
         </div>
 
         {/* Projects Cards */}
-        <div className="flex-1 overflow-y-auto hide-scrollbar flex justify-center px-6">
+        <div className="flex-1 flex justify-center px-6 items-center min-h-0">
           {isVisible ? (
             <BounceCards
-              className="origin-top scale-[0.72] sm:scale-90 md:scale-100"
+              className="origin-center scale-[0.65] sm:scale-75 md:scale-90 lg:scale-100"
               items={projects}
               renderItem={(project) => (
                 <ProjectCard
@@ -107,25 +107,25 @@ const Project = () => {
                 />
               )}
               containerWidth={900}
-              containerHeight={520}
+              containerHeight={440}
             />
           ) : (
             <div
-              className="origin-top scale-[0.72] sm:scale-90 md:scale-100"
-              style={{ width: 900, height: 460 }}
+              className="origin-center scale-[0.65] sm:scale-75 md:scale-90 lg:scale-100"
+              style={{ width: 900, height: 440 }}
               aria-hidden="true"
             />
           )}
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mt-6 flex-shrink-0 pb-4">
-          <p className="text-gray-400 mb-4 SecondaryFont">Want to see more of my work?</p>
+        <div className="text-center mt-2 flex-shrink-0 pb-4 z-20">
+          <p className="text-gray-400 mb-2 md:mb-4 SecondaryFont">Want to see more of my work?</p>
           <a
             href="https://github.com/NareshXcodes" // Replace with your GitHub profile
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 hover:scale-105"
+            className="inline-flex items-center px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg"
           >
             View All Repositories →
           </a>

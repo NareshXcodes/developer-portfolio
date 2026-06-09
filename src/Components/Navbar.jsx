@@ -1,117 +1,101 @@
-import React, { useState } from 'react'
-import { FaBars, FaTimes } from 'react-icons/fa'
-import nameLogo from './../assets/logo1.png';
+import React, { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
+import { FiHome, FiUser, FiCode, FiBriefcase, FiMail } from 'react-icons/fi'
+
+const navItems = [
+  { name: 'Home', url: '#home', icon: FiHome },
+  { name: 'About', url: '#about', icon: FiUser },
+  { name: 'Skills', url: '#skills', icon: FiCode },
+  { name: 'Projects', url: '#projects', icon: FiBriefcase },
+  { name: 'Contact', url: '#contact', icon: FiMail },
+]
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState(navItems[0].name)
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+  // Track active section on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navItems.map(item => document.querySelector(item.url))
+      const scrollPosition = window.scrollY + window.innerHeight / 2
 
-  const closeMenu = () => {
-    setIsMenuOpen(false)
-  }
+      sections.forEach(section => {
+        if (!section) return
+        const sectionTop = section.offsetTop
+        const sectionBottom = sectionTop + section.offsetHeight
 
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId)
+        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+          const matchingItem = navItems.find(item => item.url === `#${section.id}`)
+          if (matchingItem) setActiveTab(matchingItem.name)
+        }
+      })
+    }
+
+    // Since we use scroll-snap on html, we listen to window scroll
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollToSection = (e, url, name) => {
+    e.preventDefault()
+    const element = document.querySelector(url)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
+      setActiveTab(name)
     }
-    closeMenu()
   }
 
   return (
-    <nav className="w-full h-16 flex items-center justify-between bg-black/30 backdrop-blur-md border-none border-white/10 fixed top-0 z-50 px-4 lg:px-6">
-      {/* Logo Section */}
-      <div className="flex items-center">
-        <img className="h-10 w-10 rounded-full" src={nameLogo} alt="Naresh Logo" />
-        <h1 className="PrimaryGradient PrimaryFont text-2xl lg:text-3xl font-bold ml-3">
-          Naresh.
-        </h1>
+    <div className="fixed bottom-6 sm:top-6 sm:bottom-auto left-1/2 -translate-x-1/2 z-50">
+      <div className="flex items-center gap-1 sm:gap-2 py-2 px-3 sm:px-4 bg-[#0a0a0a]/60 border border-white/10 backdrop-blur-xl rounded-full shadow-2xl">
+        {navItems.map((item) => {
+          const Icon = item.icon
+          const isActive = activeTab === item.name
+
+          return (
+            <a
+              key={item.name}
+              href={item.url}
+              onClick={(e) => scrollToSection(e, item.url, item.name)}
+              className={`relative cursor-pointer flex flex-col items-center justify-center text-xs sm:text-sm font-semibold px-4 sm:px-4 py-3 sm:py-2.5 rounded-full transition-colors duration-300 ${
+                isActive ? 'text-[#FF8660]' : 'text-white/60 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <motion.div 
+                className="flex items-center gap-2 SecondaryFont tracking-wide"
+                whileTap={{ scale: 0.8, y: -5 }}
+              >
+                <Icon size={20} className="sm:w-4 sm:h-4" strokeWidth={isActive ? 2.5 : 2} />
+                <span className="hidden sm:inline">{item.name}</span>
+              </motion.div>
+              
+              {isActive && (
+                <motion.div
+                  layoutId="lamp"
+                  className="absolute inset-0 w-full sm:bg-[#FF8660]/10 rounded-full -z-10"
+                  initial={false}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 300,
+                    damping: 30,
+                  }}
+                >
+                  {/* Desktop Glowing Tubelight */}
+                  <div className="hidden sm:block absolute -top-[9px] left-1/2 -translate-x-1/2 w-8 h-1 bg-[#FF8660] rounded-b-sm z-20">
+                    <div className="absolute w-12 h-6 bg-[#FF8660]/30 rounded-full blur-md -top-2 -left-2" />
+                    <div className="absolute w-8 h-6 bg-[#FF8660]/30 rounded-full blur-md -top-1" />
+                    <div className="absolute w-4 h-4 bg-[#FF8660]/40 rounded-full blur-sm top-0 left-2" />
+                  </div>
+
+                  {/* Mobile Mac Dock Dot */}
+                  <div className="sm:hidden absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#FF8660] rounded-full shadow-[0_0_8px_2px_rgba(255,134,96,0.6)]" />
+                </motion.div>
+              )}
+            </a>
+          )
+        })}
       </div>
-
-      {/* Desktop Navigation */}
-      <div className="hidden md:flex items-center space-x-1">
-        <button 
-          onClick={() => scrollToSection('home')}
-          className="text-white SecondaryFont text-lg font-medium px-4 py-2 rounded-lg hover:bg-white/10 hover:text-blue-400 transition-all duration-300"
-        >
-          Home
-        </button>
-        <button 
-          onClick={() => scrollToSection('about')}
-          className="text-white SecondaryFont text-lg font-medium px-4 py-2 rounded-lg hover:bg-white/10 hover:text-blue-400 transition-all duration-300"
-        >
-          About
-        </button>
-        <button 
-          onClick={() => scrollToSection('skills')}
-          className="text-white SecondaryFont text-lg font-medium px-4 py-2 rounded-lg hover:bg-white/10 hover:text-blue-400 transition-all duration-300"
-        >
-          Skills
-        </button>
-        <button 
-          onClick={() => scrollToSection('projects')}
-          className="text-white SecondaryFont text-lg font-medium px-4 py-2 rounded-lg hover:bg-white/10 hover:text-blue-400 transition-all duration-300"
-        >
-          Projects
-        </button>
-        <button 
-          onClick={() => scrollToSection('contact')}
-          className="text-white SecondaryFont text-lg font-medium px-4 py-2 rounded-lg hover:bg-white/10 hover:text-blue-400 transition-all duration-300"
-        >
-          Contact
-        </button>
-      </div>
-
-      {/* Mobile Menu Button */}
-      <button
-        className="md:hidden text-white text-xl p-2 hover:bg-white/10 rounded-lg transition-colors duration-300"
-        onClick={toggleMenu}
-        aria-label="Toggle menu"
-      >
-        {isMenuOpen ? <FaTimes /> : <FaBars />}
-      </button>
-
-      {/* Mobile Navigation Menu */}
-      {isMenuOpen && (
-        <div className="absolute top-16 left-0 w-full bg-black/95 backdrop-blur-md border-b border-white/10 md:hidden">
-          <div className="flex flex-col py-4">
-            <button 
-              onClick={() => scrollToSection('home')}
-              className="text-white SecondaryFont text-lg font-medium px-6 py-3 hover:bg-white/10 hover:text-blue-400 transition-all duration-300 text-left"
-            >
-              Home
-            </button>
-            <button 
-              onClick={() => scrollToSection('about')}
-              className="text-white SecondaryFont text-lg font-medium px-6 py-3 hover:bg-white/10 hover:text-blue-400 transition-all duration-300 text-left"
-            >
-              About
-            </button>
-            <button 
-              onClick={() => scrollToSection('skills')}
-              className="text-white SecondaryFont text-lg font-medium px-6 py-3 hover:bg-white/10 hover:text-blue-400 transition-all duration-300 text-left"
-            >
-              Skills
-            </button>
-            <button 
-              onClick={() => scrollToSection('projects')}
-              className="text-white SecondaryFont text-lg font-medium px-6 py-3 hover:bg-white/10 hover:text-blue-400 transition-all duration-300 text-left"
-            >
-              Projects
-            </button>
-            <button 
-              onClick={() => scrollToSection('contact')}
-              className="text-white SecondaryFont text-lg font-medium px-6 py-3 hover:bg-white/10 hover:text-blue-400 transition-all duration-300 text-left"
-            >
-              Contact
-            </button>
-          </div>
-        </div>
-      )}
-    </nav>
+    </div>
   )
 }
 
