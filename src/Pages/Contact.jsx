@@ -42,11 +42,11 @@ const Contact = () => {
   ]
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] pt-20">
-      <div className="max-w-4xl mx-auto px-6 py-16">
+    <div className="h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] pt-24 pb-12 flex flex-col overflow-hidden">
+      <div className="max-w-4xl mx-auto px-6 w-full flex-1 flex flex-col min-h-0">
         
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 flex-shrink-0">
           <h1 className="PrimaryFont OrangeGradient text-4xl lg:text-5xl font-bold mb-4">
             CONTACT
           </h1>
@@ -56,14 +56,14 @@ const Contact = () => {
         </div>
 
         {/* Social Links - Simple Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto hide-scrollbar pb-4 pr-2 flex-1 items-start content-start">
           {socialLinks.map((social, index) => (
             <a
               key={index}
               href={social.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-4 p-6 border-l-4 border-blue-500 hover:border-orange-500 transition-colors duration-300 group"
+              className="flex items-center gap-4 p-6 border-l-4 border-blue-500 hover:border-orange-500 transition-colors duration-300 group bg-white/[0.02] rounded-r-lg"
             >
               <div className="text-2xl text-gray-400 group-hover:text-white transition-colors duration-300">
                 {social.icon}
@@ -77,7 +77,7 @@ const Contact = () => {
         </div>
 
         {/* Simple Footer Message */}
-        <div className="text-center mt-16">
+        <div className="text-center mt-10 flex-shrink-0">
           <p className="text-gray-500 SecondaryFont">
             Feel free to reach out for collaborations, opportunities, or just to say hi!
           </p>

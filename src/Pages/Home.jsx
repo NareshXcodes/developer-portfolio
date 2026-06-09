@@ -4,11 +4,10 @@ import HomeBackground from './../Components/HomeBackground.jsx';
 
 const Home = () => {
   return (
-    <div className="w-full min-h-screen relative">
+    <div className="w-full h-screen relative overflow-hidden">
       <HomeBackground>
-        <div className="min-h-screen w-full relative overflow-hidden pt-20">
-        <div className="flex items-center justify-center h-full py-16">
-          <div className="max-w-6xl mx-auto px-6 -mt-16">
+        <div className="h-full w-full relative flex items-center justify-center pt-20">
+          <div className="max-w-6xl mx-auto px-6 w-full">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
 
               {/* Left Side - Text Content */}
@@ -27,7 +26,7 @@ const Home = () => {
                   I can fix them!
                 </h3>
 
-                <p className="SecondaryFont text-gray-300 text-lg leading-relaxed max-w-xl">
+                <p className="SecondaryFont text-gray-300 text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
                   Building scalable <span className="PrimaryFont PrimaryGradient">backend systems</span> and <span className="PrimaryFont PrimaryGradient">full-stack applications</span> with FastAPI, Node.js, PostgreSQL, React, and AWS. Passionate about software engineering, cloud technologies, and transforming ideas into impactful products that solve real-world challenges.
                 </p>
               </div>
@@ -37,12 +36,11 @@ const Home = () => {
                 <img
                   src={avatar}
                   alt="Naresh Mahapatra"
-                  className="h-40vh w-44vw lg:h-40vh lg:w-40vw rounded-full object-cover"
+                  className="h-[30vh] w-[30vh] md:h-[35vh] md:w-[35vh] lg:h-[45vh] lg:w-[45vh] rounded-full object-cover shadow-2xl ring-4 ring-white/5"
                 />
               </div>
             </div>
           </div>
-        </div>
         </div>
       </HomeBackground>
     </div>

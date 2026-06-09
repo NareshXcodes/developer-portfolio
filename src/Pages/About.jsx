@@ -1,8 +1,6 @@
 import React from "react";
 import ExpCard from './../Components/ExperiencCard.jsx';
-import ScrollStack, { ScrollStackItem } from '../Components/ScrollStack.jsx';
 import awsLogo from './../assets/aws-logo.png';
-import webLogo from './../assets/web-logo.png';
 
 const About = () => {
 
@@ -10,61 +8,79 @@ const About = () => {
     {
       title:"AWS Intern" ,
       company : awsLogo ,
-      time : "June 2025 - jul 2025, 2mon",
+      time : "June 2025 - Jul 2025, 2mon",
       description : "Worked as a Cloud Intern and learned about AWS services like EC2, S3, Lambda, and CloudFormation. Gained hands-on experience in deploying and managing cloud infrastructure."
     },
     {
-      title:"Web Developer Intern" ,
-      company: webLogo,
-      time : "Sep 2024 - Nov 2024, 3mon",
-      description : "Contributed to front-end development using React and Tailwind CSS. Collaborated with the design team to implement responsive UI components and enhance user experience."
+      title: "DevOps Intern",
+      company: awsLogo,
+      time : "May 2026 - July 2026, 3mon",
+      description : "Learned about DevOps tools and practices, including CI/CD pipelines, containerization, and infrastructure automation. Gained hands-on experience in deploying and managing cloud infrastructure."
     }
   ]
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden pt-20 border-t">
+    <div className="h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden pt-24 pb-12 border-t border-white/5 flex flex-col">
       {/* Header */}
-      <div className="text-center mb-8 md:mb-12">
-        <h1 className="PrimaryFont OrangeGradient text-3xl sm:text-4xl font-bold">
+      <div className="text-center mb-8 flex-shrink-0">
+        <h1 className="PrimaryFont OrangeGradient text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
           ABOUT ME
         </h1>
+        <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-pink-500 mx-auto mt-4 rounded-full opacity-80"></div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full flex-1 min-h-0">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-stretch h-full">
+          
           {/* About Text Section */}
-          <div className="flex-1 w-full lg:w-auto">
-            <p className="SecondaryFont text-left IconGradient text-base sm:text-lg leading-relaxed mt-10 tracking-wider font-bold justify-center items-center">
-              Backend-focused Computer Science student with hands-on experience building full-stack and security-focused applications using <span className="PrimaryFont PrimaryGradient text-md">FastAPI, Python, PostgreSQL, SQLAlchemy </span>,<span className="PrimaryFont BlueGradient text-md">React.js </span>, and <span className="PrimaryFont OrangeGradient text-md">AWS services</span>. Completed an AWS internship and developed production-oriented projects including Orbital Guardian, a threat intelligence and risk assessment platform, and a Personal Finance Manager API. Skilled in REST API development, database design, cloud deployment, frontend-backend integration, and modern software engineering practices. Strong foundation in Data Structures & Algorithms and passionate about building scalable backend systems and solving real-world problems through technology.
-            </p>
+          <div className="flex-1 lg:w-3/5 flex flex-col justify-start overflow-y-auto hide-scrollbar pb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 PrimaryFont tracking-wide">
+              Who I Am
+            </h2>
+            <div className="space-y-6 text-gray-400 SecondaryFont text-base sm:text-lg leading-relaxed tracking-wide">
+              <p>
+                I am a backend-focused Computer Science student with hands-on experience building full-stack and security-focused applications. I specialize in <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 font-semibold drop-shadow-sm">FastAPI, Python, PostgreSQL, SQLAlchemy</span>, and <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-semibold drop-shadow-sm">React.js</span>, along with deploying scalable solutions using <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 font-semibold drop-shadow-sm">AWS services</span>.
+              </p>
+              <p>
+                I recently completed an AWS internship where I managed cloud infrastructure, and I've developed production-oriented projects such as Orbital Guardian, a threat intelligence platform, and a Personal Finance Manager API.
+              </p>
+              <p>
+                My core strengths lie in REST API development, database design, cloud deployment, frontend-backend integration, and modern software engineering practices. With a strong foundation in Data Structures & Algorithms, I am passionate about building scalable backend systems and solving real-world problems through technology.
+              </p>
+            </div>
+            
+            {/* Quick Skills Pills */}
+            <div className="mt-10 flex flex-wrap gap-3">
+              {['Backend Development', 'Cloud Infrastructure', 'REST APIs', 'System Design', 'Cybersecurity'].map((skill, i) => (
+                <span key={i} className="px-5 py-2 rounded-full bg-white/[0.03] border border-white/10 text-sm font-medium text-gray-300 hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-default shadow-lg backdrop-blur-sm">
+                  {skill}
+                </span>
+              ))}
+            </div>
           </div>
 
-          {/* Experience Section */}
-          <div className="flex-1 w-full lg:w-auto lg:max-w-md mt-8 lg:mt-0">
-            <h1 className="BlueGradient text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-center lg:text-center PrimaryFont">
-              EXPERIENCE
-            </h1>
-            <ScrollStack
-              className="w-full h-[20rem] sm:h-96 hide-scrollbar"
-              itemDistance={100}
-              itemScale={0.03}
-              itemStackDistance={50}
-              stackPosition="20%"
-              scaleEndPosition="0%"
-              baseScale={0.85}
-              useWindowScroll={false}
-            >
+          {/* Experience Section - Timeline Layout */}
+          <div className="flex-1 lg:w-2/5 flex flex-col w-full max-w-lg mx-auto lg:mx-0 h-full">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-center lg:text-left text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500 PrimaryFont tracking-wide flex-shrink-0">
+              Experience
+            </h2>
+            
+            <div className="relative border-l border-white/10 ml-3 sm:ml-4 space-y-10 pb-12 overflow-y-auto hide-scrollbar flex-1 pr-4">
               {expCards.map((de, index) => (
-                <ScrollStackItem key={index} itemClassName="mb-4">
+                <div key={index} className="relative pl-8 sm:pl-10 group/timeline">
+                  {/* Timeline Dot */}
+                  <div className="absolute left-[-6px] top-8 w-3 h-3 rounded-full bg-white/20 group-hover/timeline:bg-orange-500 transition-colors duration-500 shadow-[0_0_10px_rgba(249,115,22,0)] group-hover/timeline:shadow-[0_0_15px_rgba(249,115,22,0.8)] ring-4 ring-[#161513]"></div>
+                  
+                  {/* The Card */}
                   <ExpCard
                     title={de.title}
                     description={de.description}
                     company={de.company}
                     time={de.time}
                   />
-                </ScrollStackItem>
+                </div>
               ))}
-            </ScrollStack>
+            </div>
           </div>
         </div>
       </div>

@@ -40,21 +40,21 @@ const Skill = ({ skills }) => {
   ), [iconTheme]);
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-start items-center bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden p-20">
+    <div className="h-screen w-full flex flex-col justify-center items-center bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden p-8 md:p-20">
       {/* Background decorative elements - optimized for lag-free performance */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
         <div className="absolute top-10 left-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl"></div>
         <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="relative z-10 text-center">
+      <div className="relative z-10 text-center flex-shrink-0">
         <h4 className="PrimaryFont text-transparent IconGradient bg-clip-text text-4xl font-bold mb-4 tracking-wider">
           EXPERIENCED WITH
         </h4>
         <div className="w-24 h-1 bg-gradient-to-r from-[#FF8660] to-[#9A33FF] mx-auto mb-12 rounded-full"></div>
       </div>
 
-      <div className="relative w-full flex justify-center overflow-hidden">
+      <div className="relative w-full flex justify-center overflow-hidden flex-shrink-0">
         <LogoLoop
           logos={logos}
           speed={90}

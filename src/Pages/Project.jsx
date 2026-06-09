@@ -53,7 +53,7 @@ const Project = () => {
   return (
     <div
       ref={sectionRef}
-      className="min-h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden pt-20"
+      className="h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden pt-24 pb-8 flex flex-col"
     >
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div
@@ -80,9 +80,9 @@ const Project = () => {
         />
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex-1 flex flex-col min-h-0">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 flex-shrink-0">
           <h1 className="OrangeGradient text-4xl font-bold mb-4 PrimaryFont tracking-wide">PROJECTS</h1>
           <p className="text-gray-300 text-lg max-w-2xl mx-auto px-4 SecondaryFont">
             Here are some of my recent projects. Click on any card to view the repository on GitHub.
@@ -90,7 +90,7 @@ const Project = () => {
         </div>
 
         {/* Projects Cards */}
-        <div className="flex justify-center px-6 pb-20">
+        <div className="flex-1 overflow-y-auto hide-scrollbar flex justify-center px-6">
           {isVisible ? (
             <BounceCards
               className="origin-top scale-[0.72] sm:scale-90 md:scale-100"
@@ -119,7 +119,7 @@ const Project = () => {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center pb-12">
+        <div className="text-center mt-6 flex-shrink-0 pb-4">
           <p className="text-gray-400 mb-4 SecondaryFont">Want to see more of my work?</p>
           <a
             href="https://github.com/NareshXcodes" // Replace with your GitHub profile
