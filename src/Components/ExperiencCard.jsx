@@ -34,7 +34,7 @@ const ExperiencCard = ({ title, company, time, description }) => {
       onBlur={handleBlur}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative flex flex-col justify-start items-start w-full max-w-sm lg:max-w-md h-auto rounded-3xl overflow-hidden bg-[#161513]/80 border border-white/5 p-6 sm:p-8 shadow-2xl transition-all duration-300 group"
+      className="relative flex flex-col justify-start items-start w-full max-w-sm lg:max-w-md h-auto rounded-3xl overflow-hidden bg-[#161513]/80 border border-white/5 p-4 sm:p-8 shadow-2xl transition-all duration-300 group"
     >
       {/* Spotlight Effect overlay */}
       <div

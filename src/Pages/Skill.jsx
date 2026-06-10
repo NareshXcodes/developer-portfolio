@@ -40,7 +40,7 @@ const Skill = ({ skills }) => {
   ), [iconTheme]);
 
   return (
-    <div className="h-screen w-full flex flex-col justify-center items-center bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden p-8 md:p-20">
+    <div className="min-h-screen w-full flex flex-col justify-center items-center bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative p-8 pt-28 sm:pt-20 md:p-20">
       {/* Background decorative elements - optimized for lag-free performance */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
         <div className="absolute top-10 left-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl"></div>

@@ -53,7 +53,7 @@ const Project = () => {
   return (
     <div
       ref={sectionRef}
-      className="h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden pt-24 pb-8 flex flex-col"
+      className="min-h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative pt-28 sm:pt-24 pb-8 flex flex-col"
     >
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div
@@ -90,12 +90,41 @@ const Project = () => {
         </div>
 
         {/* Projects Cards */}
-        <div className="flex-1 flex justify-center px-6 items-center min-h-0">
-          {isVisible ? (
-            <BounceCards
-              className="origin-center scale-[0.65] sm:scale-75 md:scale-90 lg:scale-100"
-              items={projects}
-              renderItem={(project) => (
+        <div className="flex-1 flex flex-col justify-center w-full min-h-0 relative">
+          
+          {/* Desktop/Tablet BounceCards View */}
+          <div className="hidden md:flex flex-1 justify-center px-6 items-center min-h-0">
+            {isVisible ? (
+              <BounceCards
+                className="origin-center scale-[0.65] sm:scale-75 md:scale-90 lg:scale-100"
+                items={projects}
+                renderItem={(project) => (
+                  <ProjectCard
+                    title={project.title}
+                    description={project.description}
+                    repoLink={project.repoLink}
+                    liveLink={project.liveLink}
+                    technologies={project.technologies}
+                    stars={project.stars}
+                    forks={project.forks}
+                  />
+                )}
+                containerWidth={900}
+                containerHeight={440}
+              />
+            ) : (
+              <div
+                className="origin-center scale-[0.65] sm:scale-75 md:scale-90 lg:scale-100"
+                style={{ width: 900, height: 440 }}
+                aria-hidden="true"
+              />
+            )}
+          </div>
+
+          {/* Mobile Horizontal Scroll View */}
+          <div className="flex md:hidden overflow-x-auto gap-6 px-6 py-4 snap-x snap-mandatory hide-scrollbar w-full items-center">
+            {projects.map((project, idx) => (
+              <div key={idx} className="snap-center shrink-0 w-[85vw] max-w-[340px] h-[420px] flex justify-center">
                 <ProjectCard
                   title={project.title}
                   description={project.description}
@@ -105,17 +134,10 @@ const Project = () => {
                   stars={project.stars}
                   forks={project.forks}
                 />
-              )}
-              containerWidth={900}
-              containerHeight={440}
-            />
-          ) : (
-            <div
-              className="origin-center scale-[0.65] sm:scale-75 md:scale-90 lg:scale-100"
-              style={{ width: 900, height: 440 }}
-              aria-hidden="true"
-            />
-          )}
+              </div>
+            ))}
+          </div>
+
         </div>
 
         {/* Call to Action */}

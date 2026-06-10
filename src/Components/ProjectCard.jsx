@@ -52,7 +52,7 @@ const ProjectCard = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleCardClick}
-      className="relative flex h-full w-full min-w-[340px] max-w-[340px] flex-col overflow-hidden rounded-2xl border border-white/5 bg-[#121214] p-6 cursor-pointer group hover:border-white/20 transition-colors duration-500 shadow-xl"
+      className="relative flex h-full w-full min-w-[280px] sm:min-w-[340px] max-w-[340px] flex-col overflow-hidden rounded-2xl border border-white/5 bg-[#121214] p-6 cursor-pointer group hover:border-white/20 transition-colors duration-500 shadow-xl"
     >
       {/* Spotlight Effect */}
       <div

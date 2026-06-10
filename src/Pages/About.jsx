@@ -19,7 +19,7 @@ const About = () => {
     }
   ]
   return (
-    <div className="h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative overflow-hidden pt-24 pb-12 border-t border-white/5 flex flex-col">
+    <div className="min-h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative pt-28 sm:pt-24 pb-12 border-t border-white/5 flex flex-col">
       {/* Header */}
       <div className="text-center mb-8 flex-shrink-0">
         <h1 className="PrimaryFont OrangeGradient text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
@@ -30,10 +30,10 @@ const About = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full flex-1 min-h-0">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-stretch h-full">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-stretch h-full">
           
           {/* About Text Section */}
-          <div className="flex-1 lg:w-3/5 flex flex-col justify-start overflow-y-auto hide-scrollbar pb-12">
+          <div className="flex-1 lg:w-3/5 flex flex-col justify-start pb-12">
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 PrimaryFont tracking-wide">
               Who I Am
             </h2>
@@ -65,11 +65,11 @@ const About = () => {
               Experience
             </h2>
             
-            <div className="relative border-l border-white/10 ml-3 sm:ml-4 space-y-10 pb-12 overflow-y-auto hide-scrollbar flex-1 pr-4">
+            <div className="relative border-l border-white/10 ml-2 sm:ml-4 space-y-10 pb-12 flex-1 pr-4">
               {expCards.map((de, index) => (
-                <div key={index} className="relative pl-8 sm:pl-10 group/timeline">
+                <div key={index} className="relative pl-6 sm:pl-10 group/timeline">
                   {/* Timeline Dot */}
-                  <div className="absolute left-[-6px] top-8 w-3 h-3 rounded-full bg-white/20 group-hover/timeline:bg-orange-500 transition-colors duration-500 shadow-[0_0_10px_rgba(249,115,22,0)] group-hover/timeline:shadow-[0_0_15px_rgba(249,115,22,0.8)] ring-4 ring-[#161513]"></div>
+                  <div className="absolute left-[-6px] sm:left-[-6px] top-8 w-3 h-3 rounded-full bg-white/20 group-hover/timeline:bg-orange-500 transition-colors duration-500 shadow-[0_0_10px_rgba(249,115,22,0)] group-hover/timeline:shadow-[0_0_15px_rgba(249,115,22,0.8)] ring-4 ring-[#161513]"></div>
                   
                   {/* The Card */}
                   <ExpCard

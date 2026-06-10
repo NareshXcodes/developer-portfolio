@@ -46,8 +46,8 @@ const Navbar = () => {
   }
 
   return (
-    <div className="fixed bottom-6 sm:top-6 sm:bottom-auto left-1/2 -translate-x-1/2 z-50">
-      <div className="flex items-center gap-1 sm:gap-2 py-2 px-3 sm:px-4 bg-[#0a0a0a]/60 border border-white/10 backdrop-blur-xl rounded-full shadow-2xl">
+    <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-fit flex justify-center">
+      <div className="flex items-center gap-0.5 sm:gap-2 py-1.5 sm:py-2 px-2 sm:px-4 bg-[#0a0a0a]/60 border border-white/10 backdrop-blur-xl rounded-full shadow-2xl overflow-x-auto hide-scrollbar">
         {navItems.map((item) => {
           const Icon = item.icon
           const isActive = activeTab === item.name
@@ -57,7 +57,7 @@ const Navbar = () => {
               key={item.name}
               href={item.url}
               onClick={(e) => scrollToSection(e, item.url, item.name)}
-              className={`relative cursor-pointer flex flex-col items-center justify-center text-xs sm:text-sm font-semibold px-4 sm:px-4 py-3 sm:py-2.5 rounded-full transition-colors duration-300 ${
+              className={`relative cursor-pointer flex flex-col items-center justify-center text-[10px] sm:text-sm font-semibold px-3 sm:px-4 py-2.5 sm:py-2.5 rounded-full transition-colors duration-300 shrink-0 ${
                 isActive ? 'text-[#FF8660]' : 'text-white/60 hover:text-white hover:bg-white/5'
               }`}
             >

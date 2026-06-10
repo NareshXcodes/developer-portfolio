@@ -12,27 +12,29 @@ const SKILLS = ["cpp","py","java","git","github","js","react","tailwind","postgr
 
 function App() {
   return (
-    <div className="w-full min-h-screen overflow-x-hidden">
+    <>
       <Navbar />
-      <main>
-        <section id="home" className="snap-start">
-          <Home />
-        </section>
-        <section id="about" className="snap-start">
-          <About />
-        </section>
-        <section id="skills" className="snap-start">
-          <Skill skills={SKILLS} />
-        </section>
-        <section id="projects" className="snap-start">
-          <Project />
-        </section>
-        <section id="contact" className="snap-start">
-          <Contact />
-        </section>
-      </main>
-      <Footer />
-    </div>
+      <div className="w-full min-h-screen overflow-x-hidden">
+        <main>
+          <section id="home" className="snap-start">
+            <Home />
+          </section>
+          <section id="about" className="snap-start">
+            <About />
+          </section>
+          <section id="skills" className="snap-start">
+            <Skill skills={SKILLS} />
+          </section>
+          <section id="projects" className="snap-start">
+            <Project />
+          </section>
+          <section id="contact" className="snap-start">
+            <Contact />
+          </section>
+        </main>
+        <Footer />
+      </div>
+    </>
   )
 }
 
