@@ -10,22 +10,36 @@ const Project = () => {
   const [projects, setProjects] = useState([])
 
   useEffect(() => {
-    fetch('https://api.github.com/users/NareshXcodes/repos?sort=updated&direction=desc&per_page=4')
-      .then((res) => res.json())
-      .then((data) => {
-        const fetchedProjects = data.map((repo) => ({
-          title: repo.name.replace(/[-_]/g, ' '),
-          description: repo.description || 'No description available.',
-          repoLink: repo.html_url,
-          liveLink: repo.homepage || '',
-          technologies: [repo.language, ...(repo.topics || [])].filter(Boolean).slice(0, 4),
-          stars: repo.stargazers_count,
-          forks: repo.forks_count,
-        }))
-        setProjects(fetchedProjects)
-      })
-      .catch((err) => console.error('Error fetching GitHub repos:', err))
-  }, [])
+    const repoNames = [
+      "ArchTrack",
+      "Personal-Finance-Manager-API",
+      "developer-portfolio",
+      "Orbital-Guardian",
+    ];
+
+    Promise.all(
+        repoNames.map((repoName) =>
+            fetch(`https://api.github.com/repos/NareshXcodes/${repoName}`)
+                .then((res) => res.json())
+        )
+      )
+        .then((repos) => {
+          const fetchedProjects = repos.map((repo) => ({
+            title: repo.name.replace(/[-_]/g, " "),
+            description: repo.description || "No description available.",
+            repoLink: repo.html_url,
+            liveLink: repo.homepage || "",
+            technologies: [repo.language, ...(repo.topics || [])]
+                .filter(Boolean)
+                .slice(0, 4),
+            stars: repo.stargazers_count,
+            forks: repo.forks_count,
+          }));
+
+          setProjects(fetchedProjects);
+        })
+        .catch((err) => console.error("Error fetching GitHub repos:", err));
+    }, []);
 
 
 

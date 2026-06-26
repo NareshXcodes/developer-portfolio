@@ -39,19 +39,19 @@ const About = () => {
             </h2>
             <div className="space-y-6 text-gray-400 SecondaryFont text-base sm:text-lg leading-relaxed tracking-wide">
               <p>
-                I am a backend-focused Computer Science student with hands-on experience building full-stack and security-focused applications. I specialize in <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 font-semibold drop-shadow-sm">FastAPI, Python, PostgreSQL, SQLAlchemy</span>, and <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-semibold drop-shadow-sm">React.js</span>, along with deploying scalable solutions using <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 font-semibold drop-shadow-sm">AWS services</span>.
+                I am a backend-focused Computer Science student with hands-on experience building Scalable-Backend system and security-focused applications.
               </p>
               <p>
-                I recently completed an AWS internship where I managed cloud infrastructure, and I've developed production-oriented projects such as Orbital Guardian, a threat intelligence platform, and a Personal Finance Manager API.
+                I recently Won a 🥈 <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 font-semibold drop-shadow-sm">1st Runner-Up</span> in <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 font-semibold drop-shadow-sm">Web-Hunt (Dev Summit 2026)</span> organized by <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-semibold drop-shadow-sm">GDG on campus - Silicon University</span>, and I've developed production-oriented projects such as ArchTrack, It is a Architectural Decision Records Management platform where teams collaborate and tracks their software architecture decisions across teams and organizations and Orbital Guardian, a threat intelligence platform.
               </p>
               <p>
-                My core strengths lie in REST API development, database design, cloud deployment, frontend-backend integration, and modern software engineering practices. With a strong foundation in Data Structures & Algorithms, I am passionate about building scalable backend systems and solving real-world problems through technology.
+                My core strengths lie in REST API development, database design, cloud deployment, and modern software engineering practices. With a strong foundation in Data Structures & Algorithms, I am passionate about building scalable backend systems and solving real-world problems through technology.
               </p>
             </div>
             
             {/* Quick Skills Pills */}
             <div className="mt-10 flex flex-wrap gap-3">
-              {['Backend Development', 'Cloud Infrastructure', 'REST APIs', 'System Design', 'Cybersecurity'].map((skill, i) => (
+              {['Backend Development', 'Cloud Infrastructure', 'REST APIs', 'System Design', 'RBAC'].map((skill, i) => (
                 <span key={i} className="px-5 py-2 rounded-full bg-white/[0.03] border border-white/10 text-sm font-medium text-gray-300 hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-default shadow-lg backdrop-blur-sm">
                   {skill}
                 </span>
