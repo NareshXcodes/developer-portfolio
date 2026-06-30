@@ -1,10 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
-@import "tailwindcss";
-
+/* Fonts are loaded via <link> in index.html for non-blocking preload.
+   Removed 5 separate @import url() calls that were render-blocking. */
 
 .PrimaryFont {
   font-family: 'Silkscreen', 'Playfair Display', 'Montserrat', serif;
@@ -46,5 +41,3 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
-

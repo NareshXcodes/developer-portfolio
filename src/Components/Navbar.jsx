@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
+import { motion } from 'motion/react'
 import { FiHome, FiUser, FiCode, FiBriefcase, FiMail } from 'react-icons/fi'
 
 const navItems = [
@@ -12,38 +12,53 @@ const navItems = [
 
 const Navbar = () => {
   const [activeTab, setActiveTab] = useState(navItems[0].name)
+  const observerRef = useRef(null)
 
-  // Track active section on scroll
+  // IntersectionObserver is far more efficient than a scroll listener.
+  // The browser handles intersection detection natively in the compositor
+  // thread rather than running JS on every scroll frame.
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = navItems.map(item => document.querySelector(item.url))
-      const scrollPosition = window.scrollY + window.innerHeight / 2
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const matchingItem = navItems.find(
+              (item) => item.url === `#${entry.target.id}`
+            )
+            if (matchingItem) {
+              setActiveTab(matchingItem.name)
+            }
+          }
+        })
+      },
+      {
+        // rootMargin pulls the detection zone to roughly the middle of the viewport
+        rootMargin: '-40% 0px -40% 0px',
+        threshold: 0,
+      }
+    )
 
-      sections.forEach(section => {
-        if (!section) return
-        const sectionTop = section.offsetTop
-        const sectionBottom = sectionTop + section.offsetHeight
+    // Observe all sections
+    navItems.forEach((item) => {
+      const section = document.querySelector(item.url)
+      if (section) observerRef.current.observe(section)
+    })
 
-        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-          const matchingItem = navItems.find(item => item.url === `#${section.id}`)
-          if (matchingItem) setActiveTab(matchingItem.name)
-        }
-      })
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect()
+      }
     }
-
-    // Since we use scroll-snap on html, we listen to window scroll
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const scrollToSection = (e, url, name) => {
+  const scrollToSection = useCallback((e, url, name) => {
     e.preventDefault()
     const element = document.querySelector(url)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
       setActiveTab(name)
     }
-  }
+  }, [])
 
   return (
     <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-fit flex justify-center">

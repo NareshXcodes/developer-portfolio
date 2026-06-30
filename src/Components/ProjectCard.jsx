@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import React, { useRef, useCallback } from 'react'
+import { motion } from 'motion/react'
 import { FaGithub, FaExternalLinkAlt, FaStar, FaCodeBranch } from 'react-icons/fa'
 
 const ProjectCard = ({ 
@@ -13,53 +13,50 @@ const ProjectCard = ({
   forks 
 }) => {
   const divRef = useRef(null)
-  const [isFocused, setIsFocused] = useState(false)
-  const [position, setPosition] = useState({ x: 0, y: 0 })
-  const [opacity, setOpacity] = useState(0)
 
-  const handleMouseMove = (e) => {
-    if (!divRef.current || isFocused) return
+  // Direct CSS custom property updates — zero React re-renders from mousemove
+  const handleMouseMove = useCallback((e) => {
     const div = divRef.current
+    if (!div) return
     const rect = div.getBoundingClientRect()
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top })
-  }
+    div.style.setProperty('--mx', `${e.clientX - rect.left}px`)
+    div.style.setProperty('--my', `${e.clientY - rect.top}px`)
+  }, [])
 
-  const handleFocus = () => {
-    setIsFocused(true)
-    setOpacity(1)
-  }
+  const handleMouseEnter = useCallback(() => {
+    if (divRef.current) divRef.current.style.setProperty('--spot-opacity', '1')
+  }, [])
 
-  const handleBlur = () => {
-    setIsFocused(false)
-    setOpacity(0)
-  }
+  const handleMouseLeave = useCallback(() => {
+    if (divRef.current) divRef.current.style.setProperty('--spot-opacity', '0')
+  }, [])
 
-  const handleMouseEnter = () => setOpacity(1)
-  const handleMouseLeave = () => setOpacity(0)
-
-  const handleCardClick = () => {
+  const handleCardClick = useCallback(() => {
     if (repoLink) {
       window.open(repoLink, '_blank', 'noopener,noreferrer')
     }
-  }
+  }, [repoLink])
 
   return (
     <div
       ref={divRef}
       onMouseMove={handleMouseMove}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleCardClick}
       className="relative flex h-full w-full min-w-[280px] sm:min-w-[340px] max-w-[340px] flex-col overflow-hidden rounded-2xl border border-white/5 bg-[#121214] p-6 cursor-pointer group hover:border-white/20 transition-colors duration-500 shadow-xl"
+      style={{
+        '--mx': '0px',
+        '--my': '0px',
+        '--spot-opacity': '0',
+      }}
     >
-      {/* Spotlight Effect */}
+      {/* Spotlight Effect — reads CSS custom properties, no React state */}
       <div
-        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
+        className="pointer-events-none absolute -inset-px transition duration-300"
         style={{
-          opacity,
-          background: `radial-gradient(500px circle at ${position.x}px ${position.y}px, rgba(255,255,255,0.06), transparent 40%)`,
+          opacity: 'var(--spot-opacity)',
+          background: `radial-gradient(500px circle at var(--mx) var(--my), rgba(255,255,255,0.06), transparent 40%)`,
         }}
       />
       
@@ -75,6 +72,7 @@ const ProjectCard = ({
             <img 
               src={image} 
               alt={title} 
+              loading="lazy"
               className="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
             />
           </div>

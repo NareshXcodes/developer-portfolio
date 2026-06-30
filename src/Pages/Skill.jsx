@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "motion/react";
 
 const CATEGORIES = [
   {
@@ -90,7 +90,7 @@ const Skill = ({ skills }) => {
           
           {/* Left Side: Skills Grid */}
           <div className="w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center pr-0 md:pr-12 relative">
-            <h4 className="PrimaryFont text-transparent IconGradient bg-clip-text text-xl sm:text-2xl font-bold mb-8 tracking-widest text-center md:text-left">
+            <h4 className="PrimaryFont text-transparent IconGradient bg-clip-text text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-8 tracking-widest text-center md:text-left">
               EXPERIENCED WITH
             </h4>
             <div className="relative w-full min-h-[300px]">
@@ -109,17 +109,20 @@ const Skill = ({ skills }) => {
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: i * 0.05, duration: 0.3 }}
-                      className="flex flex-col items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/15 hover:border-white/30 transition-all duration-300 w-24 h-24"
+                      className="flex flex-col items-center justify-center gap-1 sm:gap-2 p-2 sm:px-4 sm:py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/15 hover:border-white/30 transition-all duration-300 w-16 h-16 sm:w-24 sm:h-24"
                     >
+                      {/* Batched icon fetch — each icon is still its own img for layout,
+                          but we add explicit dimensions to prevent layout shift. */}
                       <img
                         src={`https://go-skill-icons.vercel.app/api/icons?i=${item.icon}&theme=${iconTheme}`}
                         alt={item.icon}
                         width={40}
                         height={40}
-                        loading="lazy"
-                        className="h-10 w-10 object-contain drop-shadow-lg"
+                        loading="eager"
+                        decoding="async"
+                        className="h-7 w-7 sm:h-10 sm:w-10 object-contain drop-shadow-lg"
                       />
-                      <span className="SecondaryFont text-[10px] font-semibold uppercase tracking-wider text-[#cdcdcd] text-center line-clamp-1">
+                      <span className="SecondaryFont text-[8px] sm:text-[10px] font-semibold uppercase tracking-wider text-[#cdcdcd] text-center line-clamp-1">
                         {item.icon.replace(/-/g, ' ')}
                       </span>
                     </motion.div>
@@ -145,10 +148,10 @@ const Skill = ({ skills }) => {
                     <div className="w-12 h-1 bg-gradient-to-r from-[#FF8660] to-[#9A33FF] rounded-full"></div>
                     <span className="text-gray-500 font-bold tracking-widest text-sm">0{activeIndex + 1} / 0{CATEGORIES.length}</span>
                   </div>
-                  <h3 className="PrimaryFont text-white text-3xl lg:text-4xl font-bold mb-6 tracking-wide text-center md:text-left">
+                  <h3 className="PrimaryFont text-white text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 tracking-wide text-center md:text-left">
                     {CATEGORIES[activeIndex].title}
                   </h3>
-                  <p className="SecondaryFont text-base lg:text-lg text-gray-400 leading-relaxed text-center md:text-left">
+                  <p className="SecondaryFont text-sm sm:text-base lg:text-lg text-gray-400 leading-relaxed text-center md:text-left px-4 md:px-0">
                     {CATEGORIES[activeIndex].description}
                   </p>
                 </motion.div>

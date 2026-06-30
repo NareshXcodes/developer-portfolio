@@ -81,7 +81,7 @@ const Project = () => {
           <div className="relative w-full overflow-hidden rounded-t-[999px] aspect-[2/1]">
             <div className="absolute left-0 top-0 w-full aspect-square">
               <div className="relative h-full w-full pointer-events-auto">
-                <Globe className="max-w-none opacity-80" />
+                {isVisible && <Globe className="max-w-none opacity-80" />}
               </div>
             </div>
           </div>
@@ -97,8 +97,8 @@ const Project = () => {
       <div className="relative z-10 w-full max-w-7xl mx-auto flex-1 flex flex-col min-h-0">
         {/* Header */}
         <div className="text-center mb-2 md:mb-6 flex-shrink-0">
-          <h1 className="OrangeGradient text-4xl font-bold mb-2 md:mb-4 PrimaryFont tracking-wide">PROJECTS</h1>
-          <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto px-4 SecondaryFont">
+          <h1 className="OrangeGradient text-3xl sm:text-4xl font-bold mb-2 md:mb-4 PrimaryFont tracking-wide">PROJECTS</h1>
+          <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-4 SecondaryFont">
             Here are some of my recent projects. Click on any card to view the repository on GitHub.
           </p>
         </div>
@@ -156,12 +156,12 @@ const Project = () => {
 
         {/* Call to Action */}
         <div className="text-center mt-2 flex-shrink-0 pb-4 z-20">
-          <p className="text-gray-400 mb-2 md:mb-4 SecondaryFont">Want to see more of my work?</p>
+          <p className="text-gray-400 text-sm sm:text-base mb-2 md:mb-4 SecondaryFont">Want to see more of my work?</p>
           <a
             href="https://github.com/NareshXcodes" // Replace with your GitHub profile
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg"
+            className="inline-flex items-center text-sm sm:text-base px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg"
           >
             View All Repositories →
           </a>

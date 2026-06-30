@@ -1,15 +1,23 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import React, { lazy, Suspense } from 'react'
+import { motion } from 'motion/react'
 import './App.css'
 import Navbar from './Components/Navbar.jsx';
 import Footer from './Components/Footer.jsx';
 import Home from './Pages/Home.jsx';
-import Skill from './Pages/Skill.jsx';
-import Project from './Pages/Project.jsx';
 import About from './Pages/About.jsx';
-import Contact from './Pages/Contact.jsx';
+
+// Code-split below-the-fold sections — defers loading cobe (WebGL),
+// BounceCards, and other heavy components until they're needed.
+const Skill = lazy(() => import('./Pages/Skill.jsx'))
+const Project = lazy(() => import('./Pages/Project.jsx'))
+const Contact = lazy(() => import('./Pages/Contact.jsx'))
 
 const SKILLS = ["cpp","py","java","git","github","js","react","tailwind","postgres","nodejs","supabase","aws" , "fastapi","docker","sqlalchemy","pydantic","sqlite"]
+
+// Minimal fallback that matches the dark background — prevents layout shift
+const SectionFallback = () => (
+  <div className="min-h-screen w-full bg-[#0a0a0a]" />
+)
 
 function App() {
   return (
@@ -49,7 +57,9 @@ function App() {
               id="skills" 
               className="snap-start"
             >
-              <Skill skills={SKILLS} />
+              <Suspense fallback={<SectionFallback />}>
+                <Skill skills={SKILLS} />
+              </Suspense>
             </section>
           </motion.section>
           <motion.section 
@@ -60,7 +70,9 @@ function App() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <Project />
+            <Suspense fallback={<SectionFallback />}>
+              <Project />
+            </Suspense>
           </motion.section>
           <motion.section 
             id="contact" 
@@ -70,7 +82,9 @@ function App() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <Contact />
+            <Suspense fallback={<SectionFallback />}>
+              <Contact />
+            </Suspense>
           </motion.section>
         </main>
         <Footer />

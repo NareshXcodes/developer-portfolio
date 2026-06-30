@@ -10,7 +10,7 @@ const DEFAULT_CONFIG = {
   theta: 0.3,
   dark: 1.1,
   diffuse: 3,
-  mapSamples: 16000,
+  mapSamples: 8000, // Reduced from 16000 for better performance
   mapBrightness: 1.8,
   baseColor: [1, 1, 1],
   markerColor: [251 / 255, 100 / 255, 21 / 255],
@@ -46,6 +46,7 @@ const Globe = ({ className = '', config = DEFAULT_CONFIG }) => {
 
     if (!canvasRef.current) return undefined
 
+    let currentWidth = 0
     const globe = createGlobe(canvasRef.current, {
       ...config,
       width: Math.max(1, widthRef.current) * 2,
@@ -53,8 +54,14 @@ const Globe = ({ className = '', config = DEFAULT_CONFIG }) => {
       onRender: (state) => {
         phiRef.current += 0.005
         state.phi = phiRef.current
-        state.width = Math.max(1, widthRef.current) * 2
-        state.height = Math.max(1, widthRef.current) * 2
+        
+        // Only update dimensions if they changed, instead of every frame
+        const newWidth = Math.max(1, widthRef.current) * 2
+        if (currentWidth !== newWidth) {
+          state.width = newWidth
+          state.height = newWidth
+          currentWidth = newWidth
+        }
       }
     })
 
