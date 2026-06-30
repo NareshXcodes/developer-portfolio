@@ -8,6 +8,8 @@ html {
 
 body {
   font-family: 'Silkscreen', 'Playfair Display', 'Montserrat', serif;
+  background-color: #0a0a0a;
+  color: white;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
