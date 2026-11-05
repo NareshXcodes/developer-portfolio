@@ -4,23 +4,23 @@ import HomeBackground from './../Components/HomeBackground.jsx';
 
 const Home = () => {
   return (
-    <div className="w-full min-h-screen relative">
+    <div className="w-full h-screen relative overflow-hidden">
       <HomeBackground>
-        <div className="h-full w-full relative flex items-center justify-center pt-24 sm:pt-20 pb-12 sm:pb-0">
+        <div className="h-full w-full relative flex items-center justify-center pt-16 sm:pt-12 pb-6 sm:pb-0 overflow-hidden">
           <div className="max-w-6xl mx-auto px-6 w-full">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-10">
 
               {/* Left Side - Text Content */}
-              <div className="flex-1 text-center lg:text-left mt-8 lg:mt-0">
-                <h2 className="SecondaryFont text-gray-300 text-lg sm:text-xl mb-4">
+              <div className="flex-1 text-center lg:text-left">
+                <h2 className="SecondaryFont text-gray-300 text-lg sm:text-xl mb-2">
                   Hello, I'm
                 </h2>
 
-                <h1 className="PrimaryFont PrimaryGradient text-3xl sm:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+                <h1 className="PrimaryFont PrimaryGradient text-4xl sm:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 leading-tight">
                   Naresh Mahapatra
                 </h1>
 
-                <h3 className="PrimaryFont IconGradient text-xl sm:text-2xl lg:text-3xl font-bold mb-6 sm:mb-8 leading-relaxed">
+                <h3 className="PrimaryFont IconGradient text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-5 leading-relaxed">
                   I write bugs so
                   <br />
                   I can fix them!
@@ -36,7 +36,7 @@ const Home = () => {
                 <img
                   src={avatar}
                   alt="Naresh Mahapatra"
-                  className="w-40 h-40 sm:w-64 sm:h-64 lg:h-[45vh] lg:w-[45vh] rounded-full object-cover shadow-2xl ring-4 ring-white/5"
+                  className="w-32 h-32 sm:w-48 sm:h-48 lg:h-[36vh] lg:w-[36vh] rounded-full object-cover shadow-2xl ring-4 ring-white/5"
                 />
               </div>
             </div>

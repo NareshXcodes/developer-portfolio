@@ -1,87 +1,162 @@
 import React from "react";
 import ExpCard from './../Components/ExperiencCard.jsx';
 import awsLogo from './../assets/aws-logo.png';
+import { GitHubCalendar } from 'react-github-calendar';
+
+const expCards = [
+  {
+    title: "AWS Intern",
+    company: awsLogo,
+    time: "June 2025 – Jul 2025 · 2 months",
+    description:
+      "Worked as a Cloud Intern learning EC2, S3, Lambda, and CloudFormation. Gained hands-on experience deploying and managing cloud infrastructure.",
+  },
+  {
+    title: "DevOps Intern",
+    company: awsLogo,
+    time: "May 2026 – July 2026 · 3 months",
+    description:
+      "Learned CI/CD pipelines, containerisation, and infrastructure automation. Gained hands-on experience deploying and managing cloud infrastructure.",
+  },
+];
+
+const PILLS = ["Backend Development", "Cloud Infrastructure", "REST APIs", "System Design"];
 
 const About = () => {
-
-  const expCards = [
-    {
-      title:"AWS Intern" ,
-      company : awsLogo ,
-      time : "June 2025 - Jul 2025, 2mon",
-      description : "Worked as a Cloud Intern and learned about AWS services like EC2, S3, Lambda, and CloudFormation. Gained hands-on experience in deploying and managing cloud infrastructure."
-    },
-    {
-      title: "DevOps Intern",
-      company: awsLogo,
-      time : "May 2026 - July 2026, 3mon",
-      description : "Learned about DevOps tools and practices, including CI/CD pipelines, containerization, and infrastructure automation. Gained hands-on experience in deploying and managing cloud infrastructure."
-    }
-  ]
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a] relative pt-28 sm:pt-24 pb-12 border-t border-white/5 flex flex-col">
-      {/* Header */}
-      <div className="text-center mb-8 flex-shrink-0">
+    <div className="min-h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#0a0a0a] relative pt-24 pb-16 border-t border-white/5">
+
+      {/* ── Section Header ── */}
+      <div className="text-center mb-12 px-6">
+        <p className="SecondaryFont text-xs tracking-[0.25em] text-gray-500 uppercase mb-3">Get to know me</p>
         <h1 className="PrimaryFont OrangeGradient text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight">
           ABOUT ME
         </h1>
-        <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-pink-500 mx-auto mt-4 rounded-full opacity-80"></div>
+        <div className="w-16 h-px bg-white/10 mx-auto mt-6" />
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full flex-1 min-h-0">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-stretch h-full">
-          
-          {/* About Text Section */}
-          <div className="flex-1 lg:w-3/5 flex flex-col justify-start pb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 PrimaryFont tracking-wide">
-              Who I Am
-            </h2>
-            <div className="space-y-6 text-gray-400 SecondaryFont text-base sm:text-lg leading-relaxed tracking-wide">
-              <p>
-                I am a backend-focused Computer Science student with hands-on experience building Scalable-Backend system and security-focused applications.
-              </p>
-              <p>
-                I recently Won a 🥈 <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 font-semibold drop-shadow-sm">1st Runner-Up</span> in <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 font-semibold drop-shadow-sm">Web-Hunt (Dev Summit 2026)</span> organized by <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-semibold drop-shadow-sm">GDG on campus - Silicon University</span>, and I've developed production-oriented projects such as ArchTrack, It is a Architectural Decision Records Management platform where teams collaborate and tracks their software architecture decisions across teams and organizations and Orbital Guardian, a threat intelligence platform.
-              </p>
-              <p>
-                My core strengths lie in REST API development, database design, cloud deployment, and modern software engineering practices. With a strong foundation in Data Structures & Algorithms, I am passionate about building scalable backend systems and solving real-world problems through technology.
-              </p>
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+
+          {/* ── LEFT: Bio + pills ── */}
+          <div className="flex flex-col gap-8">
+            <div>
+              <h2 className="PrimaryFont text-white text-2xl sm:text-3xl font-bold mb-5 tracking-wide">
+                Who I Am
+              </h2>
+              <div className="space-y-5 SecondaryFont text-gray-400 text-base sm:text-lg leading-relaxed">
+                <p>
+                  I am a backend-focused Computer Science student with hands-on experience building
+                  scalable backend systems and security-focused applications.
+                </p>
+                <p>
+                  I recently won a 🥈{" "}
+                  <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 font-semibold">
+                    1st Runner-Up
+                  </span>{" "}
+                  in{" "}
+                  <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 font-semibold">
+                    Web-Hunt (Dev Summit 2026)
+                  </span>{" "}
+                  organised by{" "}
+                  <span className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-semibold">
+                    GDG on campus – Silicon University
+                  </span>
+                  . I've built production-oriented projects like{" "}
+                  <span className="text-white font-medium">ArchTrack</span> (an Architectural
+                  Decision Records platform) and{" "}
+                  <span className="text-white font-medium">Orbital Guardian</span> (a threat
+                  intelligence platform).
+                </p>
+                <p>
+                  My core strengths lie in REST API development, database design, cloud deployment,
+                  and modern software engineering practices.
+                </p>
+              </div>
             </div>
-            
-            {/* Quick Skills Pills */}
-            <div className="mt-10 flex flex-wrap gap-3">
-              {['Backend Development', 'Cloud Infrastructure', 'REST APIs', 'System Design', 'RBAC'].map((skill, i) => (
-                <span key={i} className="px-5 py-2 rounded-full bg-white/[0.03] border border-white/10 text-sm font-medium text-gray-300 hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-default shadow-lg backdrop-blur-sm">
-                  {skill}
+
+            {/* Skill pills */}
+            <div className="flex flex-wrap gap-2">
+              {PILLS.map((pill) => (
+                <span
+                  key={pill}
+                  className="px-4 py-1.5 rounded-full border border-white/10 text-xs font-medium text-gray-300 bg-white/[0.03] hover:bg-white/8 hover:border-white/20 transition-colors duration-200 cursor-default"
+                >
+                  {pill}
                 </span>
               ))}
             </div>
-          </div>
 
-          {/* Experience Section - Timeline Layout */}
-          <div className="flex-1 lg:w-2/5 flex flex-col w-full max-w-lg mx-auto lg:mx-0 h-full">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-center lg:text-left text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500 PrimaryFont tracking-wide flex-shrink-0">
-              Experience
-            </h2>
-            
-            <div className="relative border-l border-white/10 ml-2 sm:ml-4 space-y-10 pb-12 flex-1 pr-4">
-              {expCards.map((de, index) => (
-                <div key={index} className="relative pl-6 sm:pl-10 group/timeline">
-                  {/* Timeline Dot */}
-                  <div className="absolute left-[-6px] sm:left-[-6px] top-8 w-3 h-3 rounded-full bg-white/20 group-hover/timeline:bg-orange-500 transition-colors duration-500 shadow-[0_0_10px_rgba(249,115,22,0)] group-hover/timeline:shadow-[0_0_15px_rgba(249,115,22,0.8)] ring-4 ring-[#161513]"></div>
-                  
-                  {/* The Card */}
-                  <ExpCard
-                    title={de.title}
-                    description={de.description}
-                    company={de.company}
-                    time={de.time}
-                  />
-                </div>
-              ))}
+            {/* Experience timeline */}
+            <div>
+              <h2 className="PrimaryFont text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-500 text-xl sm:text-2xl font-bold mb-6 tracking-wide">
+                Experience
+              </h2>
+              <div className="relative border-l border-white/10 ml-3 space-y-8">
+                {expCards.map((card, i) => (
+                  <div key={i} className="relative pl-8 group/tl">
+                    {/* dot */}
+                    <span className="absolute left-[-5px] top-8 w-2.5 h-2.5 rounded-full bg-white/15 ring-4 ring-[#0a0a0a] group-hover/tl:bg-orange-500 transition-colors duration-300" />
+                    <ExpCard
+                      title={card.title}
+                      description={card.description}
+                      company={card.company}
+                      time={card.time}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+
+          {/* ── RIGHT: Stats & Activity ── */}
+          <div className="flex flex-col gap-6 lg:pt-2">
+
+            {/* Label */}
+            <h2 className="PrimaryFont text-white text-2xl sm:text-3xl font-bold tracking-wide">
+              Stats &amp; Activity
+            </h2>
+
+            {/* LeetCode Stats Card */}
+            <div className="rounded-2xl border border-white/8 bg-white/[0.02] overflow-hidden">
+              <div className="px-5 pt-4 pb-2">
+                <p className="SecondaryFont text-[10px] font-semibold tracking-[0.2em] text-gray-500 uppercase">
+                  LeetCode · nrsh_08
+                </p>
+              </div>
+              <div className="px-4 pb-4">
+                <img
+                  src="https://leetcode-stats-six.vercel.app?username=nrsh_08&theme=dark&width=500"
+                  alt="LeetCode stats for nrsh_08"
+                  className="w-full h-auto rounded-xl"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </div>
+
+            {/* GitHub Activity Graph */}
+            <div className="rounded-2xl border border-white/8 bg-white/[0.02] overflow-hidden">
+              <div className="px-5 pt-4 pb-2">
+                <p className="SecondaryFont text-[10px] font-semibold tracking-[0.2em] text-gray-500 uppercase">
+                  GitHub Activity · NareshXcodes
+                </p>
+              </div>
+              <div className="px-4 pb-4 overflow-x-auto">
+                <div className="w-full min-w-0">
+                  <GitHubCalendar
+                    username="NareshXcodes"
+                    colorScheme="dark"
+                    fontSize={12}
+                    blockSize={11}
+                    blockMargin={4}
+                  />
+                </div>
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </div>
     </div>

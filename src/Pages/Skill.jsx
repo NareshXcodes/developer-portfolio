@@ -1,181 +1,220 @@
-import React, { useMemo, useRef, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValueEvent,
-  useReducedMotion,
-  useScroll,
-} from "motion/react";
+import React, { useMemo, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 const CATEGORIES = [
   {
     id: "programming_languages",
-    title: "Programming Languages",
-    description: "The foundational languages I use to build robust logic, complex algorithms, and high-performance applications."
+    title: "Languages",
+    description:
+      "Foundational languages I use to build robust logic, complex algorithms, and high-performance applications.",
   },
   {
     id: "frontend",
-    title: "Frontend Development",
-    description: "Crafting interactive, responsive, and visually stunning user interfaces using modern web technologies and frameworks."
+    title: "Frontend",
+    description:
+      "Crafting interactive, responsive, and visually stunning user interfaces with modern web technologies.",
   },
   {
     id: "backend",
-    title: "Backend Development",
-    description: "Building scalable, secure, and highly-available server-side architectures and APIs."
+    title: "Backend",
+    description:
+      "Building scalable, secure, and highly-available server-side architectures and REST APIs.",
   },
   {
     id: "database",
-    title: "Database Architecture",
-    description: "Designing and managing efficient data storage solutions, from relational databases to modern NoSQL systems."
+    title: "Database",
+    description:
+      "Designing and managing efficient data-storage solutions, from relational databases to modern cloud stores.",
   },
   {
     id: "Cloud & Tools",
     title: "Cloud & Tools",
-    description: "Leveraging modern DevOps practices, cloud infrastructure, and version control to ensure seamless deployments and collaboration."
-  }
+    description:
+      "Leveraging DevOps practices, cloud infrastructure, and version control for seamless deployments.",
+  },
 ];
 
 const ICON_MAP = {
-  cpp: { icon: "cpp", title: "programming_languages" },
-  py: { icon: "python", title: "programming_languages" },
-  java: { icon: "java", title: "programming_languages" },
-  git: { icon: "git", title: "Cloud & Tools" },
-  github: { icon: "github", title: "Cloud & Tools" },
-  docker: { icon: "docker", title: "Cloud & Tools" },
-  js: { icon: "javascript", title: "frontend" },
-  react: { icon: "react", title: "frontend" },
-  tailwind: { icon: "tailwind", title: "frontend" },
-  supabase: { icon: "supabase", title: "database" },
-  postgres: { icon: "postgresql", title: "database" },
-  sqlite: { icon: "sqlite", title: "database" },
-  nodejs: { icon: "nodejs", title: "backend" },
-  aws: { icon: "aws", title: "Cloud & Tools" },
-  fastapi: { icon: "fastapi", title: "backend" },
-  pydantic: { icon: "pydantic", title: "backend" },
+  cpp:        { icon: "cpp",        title: "programming_languages" },
+  py:         { icon: "python",     title: "programming_languages" },
+  java:       { icon: "java",       title: "programming_languages" },
+  git:        { icon: "git",        title: "Cloud & Tools" },
+  github:     { icon: "github",     title: "Cloud & Tools" },
+  docker:     { icon: "docker",     title: "Cloud & Tools" },
+  js:         { icon: "javascript", title: "frontend" },
+  react:      { icon: "react",      title: "frontend" },
+  tailwind:   { icon: "tailwind",   title: "frontend" },
+  supabase:   { icon: "supabase",   title: "database" },
+  postgres:   { icon: "postgresql", title: "database" },
+  sqlite:     { icon: "sqlite",     title: "database" },
+  nodejs:     { icon: "nodejs",     title: "backend" },
+  aws:        { icon: "aws",        title: "Cloud & Tools" },
+  fastapi:    { icon: "fastapi",    title: "backend" },
+  pydantic:   { icon: "pydantic",   title: "backend" },
   sqlalchemy: { icon: "sqlalchemy", title: "backend" },
 };
 
+const ICON_THEME = "dark";
+
 const Skill = ({ skills }) => {
-  const containerRef = useRef(null);
-  const activeIndexRef = useRef(0);
   const [activeIndex, setActiveIndex] = useState(0);
-  const prefersReducedMotion = useReducedMotion();
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    let index = Math.floor(latest * CATEGORIES.length);
-    if (index >= CATEGORIES.length) index = CATEGORIES.length - 1;
-    if (index < 0) index = 0;
-    if (index !== activeIndexRef.current) {
-      activeIndexRef.current = index;
-      setActiveIndex(index);
-    }
-  });
+  const prefersReduced = useReducedMotion();
 
   const groupedSkills = useMemo(() => {
-    const logos = skills.map((skill) => ICON_MAP[skill]).filter(Boolean);
-
+    const logos = skills.map((s) => ICON_MAP[s]).filter(Boolean);
     return CATEGORIES.reduce((acc, cat) => {
-      acc[cat.id] = logos.filter((skill) => skill.title === cat.id);
+      acc[cat.id] = logos.filter((s) => s.title === cat.id);
       return acc;
     }, {});
   }, [skills]);
 
-  const iconTheme = "dark";
+  const active = CATEGORIES[activeIndex];
+  const icons = groupedSkills[active.id] ?? [];
 
   return (
-    <div ref={containerRef} className="relative w-full" style={{ height: `${CATEGORIES.length * 100}vh` }}>
-      {/* Sticky Container */}
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#0a0a0a] via-[#161513] to-[#1a1a1a]">
-        
-        <div
-          className="absolute inset-0 pointer-events-none opacity-20"
-          aria-hidden="true"
-          style={{
-            background:
-              "radial-gradient(circle at 12% 18%, rgba(168, 85, 247, 0.28), transparent 28%), radial-gradient(circle at 88% 82%, rgba(59, 130, 246, 0.24), transparent 32%)",
-          }}
-        />
+    <div className="min-h-screen w-full bg-gradient-to-br from-[#0a0a0a] via-[#0f0f0f] to-[#0a0a0a] border-t border-white/5 flex flex-col items-center justify-center py-20 px-6">
 
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center h-[80vh]">
-          
-          {/* Left Side: Skills Grid */}
-          <div className="w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center pr-0 md:pr-12 relative">
-            <h4 className="PrimaryFont text-transparent IconGradient bg-clip-text text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-8 tracking-widest text-center md:text-left">
-              EXPERIENCED WITH
-            </h4>
-            <div className="relative w-full min-h-[300px]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeIndex}
-                  initial={prefersReducedMotion ? false : { opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={prefersReducedMotion ? undefined : { opacity: 0, x: 20 }}
-                  transition={{ duration: prefersReducedMotion ? 0 : 0.25, ease: "easeOut" }}
-                  className="absolute inset-0 flex flex-wrap gap-4 justify-center md:justify-start content-start"
-                >
-                  {groupedSkills[CATEGORIES[activeIndex].id]?.map((item, i) => (
-                    <motion.div
-                      key={item.icon}
-                      initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.94 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{
-                        delay: prefersReducedMotion ? 0 : i * 0.03,
-                        duration: prefersReducedMotion ? 0 : 0.2,
-                      }}
-                      className="flex flex-col items-center justify-center gap-1 sm:gap-2 p-2 sm:px-4 sm:py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/15 hover:border-white/30 transition-colors duration-300 w-16 h-16 sm:w-24 sm:h-24"
-                    >
-                      <img
-                        src={`https://go-skill-icons.vercel.app/api/icons?i=${item.icon}&theme=${iconTheme}`}
-                        alt={item.icon}
-                        width={40}
-                        height={40}
-                        loading="lazy"
-                        decoding="async"
-                        className="h-7 w-7 sm:h-10 sm:w-10 object-contain drop-shadow-lg"
-                      />
-                      <span className="SecondaryFont text-[8px] sm:text-[10px] font-semibold uppercase tracking-wider text-[#cdcdcd] text-center line-clamp-1">
-                        {item.icon.replace(/-/g, ' ')}
-                      </span>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
+      {/* ── Section Header ── */}
+      <div className="text-center mb-12 w-full">
+        <p className="SecondaryFont text-xs tracking-[0.25em] text-gray-500 uppercase mb-3">What I work with</p>
+        <h1 className="PrimaryFont PrimaryGradient text-4xl sm:text-5xl md:text-6xl font-extrabold">
+          SKILLS
+        </h1>
+        <div className="w-16 h-px bg-white/10 mx-auto mt-6" />
+      </div>
 
-          {/* Right Side: Descriptions */}
-          <div className="w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center pl-0 md:pl-12 border-t border-white/10 md:border-t-0 md:border-l relative">
-            <div className="relative w-full min-h-[250px] flex flex-col justify-center">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeIndex}
-                  initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={prefersReducedMotion ? undefined : { opacity: 0, y: -20 }}
-                  transition={{ duration: prefersReducedMotion ? 0 : 0.25, ease: "easeOut" }}
-                  className="absolute inset-x-0"
-                >
-                  <div className="flex items-center gap-4 mb-6 justify-center md:justify-start">
-                    <div className="w-12 h-1 bg-gradient-to-r from-[#FF8660] to-[#9A33FF] rounded-full"></div>
-                    <span className="text-gray-500 font-bold tracking-widest text-sm">0{activeIndex + 1} / 0{CATEGORIES.length}</span>
-                  </div>
-                  <h3 className="PrimaryFont text-white text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 tracking-wide text-center md:text-left">
-                    {CATEGORIES[activeIndex].title}
-                  </h3>
-                  <p className="SecondaryFont text-sm sm:text-base lg:text-lg text-gray-400 leading-relaxed text-center md:text-left px-4 md:px-0">
-                    {CATEGORIES[activeIndex].description}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-          
+      {/* ── Bento Container ── */}
+      <div className="w-full max-w-6xl">
+
+        {/* Tab bar */}
+        <div className="flex flex-wrap gap-2 justify-center mb-8">
+          {CATEGORIES.map((cat, i) => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveIndex(i)}
+              className={`relative px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase transition-all duration-200 SecondaryFont
+                ${activeIndex === i
+                  ? "text-white border border-white/20 bg-white/8"
+                  : "text-gray-500 border border-transparent hover:text-gray-300 hover:border-white/10"
+                }`}
+            >
+              {cat.title}
+              {activeIndex === i && (
+                <motion.span
+                  layoutId="tab-pill"
+                  className="absolute inset-0 rounded-full bg-white/[0.06] border border-white/15 -z-10"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+            </button>
+          ))}
         </div>
+
+        {/* Bento grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 items-stretch">
+
+          {/* Left: Category info card — spans 2 cols */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active.id + "-info"}
+              initial={prefersReduced ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={prefersReduced ? undefined : { opacity: 0, y: -12 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="lg:col-span-2 rounded-2xl border border-white/8 bg-white/[0.02] p-8 flex flex-col justify-between min-h-[280px]"
+            >
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-8 h-px bg-gradient-to-r from-white/40 to-transparent" />
+                  <span className="SecondaryFont text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase">
+                    {String(activeIndex + 1).padStart(2, "0")} / {String(CATEGORIES.length).padStart(2, "0")}
+                  </span>
+                </div>
+                <h2 className="PrimaryFont text-white text-3xl sm:text-4xl font-bold leading-tight mb-4 tracking-wide">
+                  {active.title}
+                </h2>
+                <p className="SecondaryFont text-gray-400 text-sm sm:text-base leading-relaxed">
+                  {active.description}
+                </p>
+              </div>
+
+              {/* skill count badge */}
+              <div className="mt-8 inline-flex items-center gap-2 self-start">
+                <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
+                <span className="SecondaryFont text-xs text-gray-500">
+                  {icons.length} {icons.length === 1 ? "technology" : "technologies"}
+                </span>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Right: Icon grid — spans 3 cols */}
+          <div className="lg:col-span-3 rounded-2xl border border-white/8 bg-white/[0.02] p-6 min-h-[280px] flex flex-col">
+            <p className="SecondaryFont text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mb-6">
+              Technologies
+            </p>
+            <div className="flex-1 relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={active.id + "-icons"}
+                  initial={prefersReduced ? false : { opacity: 0, x: 16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={prefersReduced ? undefined : { opacity: 0, x: -16 }}
+                  transition={{ duration: 0.22, ease: "easeOut" }}
+                  className="absolute inset-0 flex flex-wrap gap-3 content-start"
+                >
+                  {icons.length === 0 ? (
+                    <p className="SecondaryFont text-gray-600 text-sm self-center mx-auto mt-8">
+                      No items in this category.
+                    </p>
+                  ) : (
+                    icons.map((item, i) => (
+                      <motion.div
+                        key={item.icon}
+                        initial={prefersReduced ? false : { opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          delay: prefersReduced ? 0 : i * 0.04,
+                          duration: 0.18,
+                        }}
+                        className="flex flex-col items-center justify-center gap-2 w-20 h-20 sm:w-24 sm:h-24 rounded-xl border border-white/8 bg-white/[0.02] hover:bg-white/[0.06] hover:border-white/18 transition-all duration-200 group cursor-default"
+                      >
+                        <img
+                          src={`https://go-skill-icons.vercel.app/api/icons?i=${item.icon}&theme=${ICON_THEME}`}
+                          alt={item.icon}
+                          width={36}
+                          height={36}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-8 h-8 sm:w-9 sm:h-9 object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-200"
+                        />
+                        <span className="SecondaryFont text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-gray-500 group-hover:text-gray-300 transition-colors duration-200 text-center leading-none px-1">
+                          {item.icon.replace(/-/g, " ")}
+                        </span>
+                      </motion.div>
+                    ))
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom nav dots */}
+        <div className="flex justify-center gap-2 mt-8">
+          {CATEGORIES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveIndex(i)}
+              className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                activeIndex === i ? "bg-white/60 w-5" : "bg-white/15 hover:bg-white/30"
+              }`}
+              aria-label={CATEGORIES[i].title}
+            />
+          ))}
+        </div>
+
       </div>
     </div>
   );

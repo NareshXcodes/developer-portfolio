@@ -3,11 +3,54 @@ import BounceCards from '../Components/BounceCards'
 import Globe from '../Components/Globe'
 import ProjectCard from '../Components/ProjectCard'
 
+const PROJECTS = [
+  {
+    name: 'ArchTrack',
+    title: 'ArchTrack',
+    description: 'An architecture decision records platform for collaborating teams.',
+    repoLink: 'https://github.com/NareshXcodes/ArchTrack',
+    liveLink: '',
+    technologies: ['JavaScript', 'React'],
+    stars: 0,
+    forks: 0,
+  },
+  {
+    name: 'Personal-Finance-Manager-API',
+    title: 'Personal Finance Manager API',
+    description: 'A backend API for managing personal finances and transactions.',
+    repoLink: 'https://github.com/NareshXcodes/Personal-Finance-Manager-API',
+    liveLink: '',
+    technologies: ['Python', 'FastAPI'],
+    stars: 0,
+    forks: 0,
+  },
+  {
+    name: 'developer-portfolio',
+    title: 'developer portfolio',
+    description: 'A responsive developer portfolio built with React.',
+    repoLink: 'https://github.com/NareshXcodes/developer-portfolio',
+    liveLink: '',
+    technologies: ['JavaScript', 'React'],
+    stars: 0,
+    forks: 0,
+  },
+  {
+    name: 'Orbital-Guardian',
+    title: 'Orbital Guardian',
+    description: 'A threat intelligence platform for monitoring security signals.',
+    repoLink: 'https://github.com/NareshXcodes/Orbital-Guardian',
+    liveLink: '',
+    technologies: ['Python', 'FastAPI'],
+    stars: 0,
+    forks: 0,
+  },
+]
+
 const Project = () => {
   const sectionRef = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
 
-  const [projects, setProjects] = useState([])
+  const [projects, setProjects] = useState(PROJECTS)
 
   useEffect(() => {
     const repoNames = [
@@ -17,29 +60,42 @@ const Project = () => {
       "Orbital-Guardian",
     ];
 
-    Promise.all(
-        repoNames.map((repoName) =>
-            fetch(`https://api.github.com/repos/NareshXcodes/${repoName}`)
-                .then((res) => res.json())
-        )
-      )
-        .then((repos) => {
-          const fetchedProjects = repos.map((repo) => ({
-            title: repo.name.replace(/[-_]/g, " "),
-            description: repo.description || "No description available.",
-            repoLink: repo.html_url,
-            liveLink: repo.homepage || "",
-            technologies: [repo.language, ...(repo.topics || [])]
-                .filter(Boolean)
-                .slice(0, 4),
-            stars: repo.stargazers_count,
-            forks: repo.forks_count,
-          }));
-
-          setProjects(fetchedProjects);
+      Promise.allSettled(
+        repoNames.map(async (repoName) => {
+          const response = await fetch(`https://api.github.com/repos/NareshXcodes/${repoName}`)
+          if (!response.ok) {
+            throw new Error(`GitHub returned ${response.status} for ${repoName}`)
+          }
+          return response.json()
         })
-        .catch((err) => console.error("Error fetching GitHub repos:", err));
-    }, []);
+      ).then((results) => {
+        const fetchedProjects = results.map((result, index) => {
+          const fallback = PROJECTS[index]
+          if (result.status === 'rejected' || !result.value?.name) {
+            if (result.status === 'rejected') {
+              console.warn(`Using local project data for ${fallback.name}:`, result.reason)
+            }
+            return fallback
+          }
+
+          const repo = result.value
+          return {
+            ...fallback,
+            title: repo.name.replace(/[-_]/g, ' '),
+            description: repo.description || fallback.description,
+            repoLink: repo.html_url || fallback.repoLink,
+            liveLink: repo.homepage || '',
+            technologies: [repo.language, ...(repo.topics || [])]
+              .filter(Boolean)
+              .slice(0, 4),
+            stars: repo.stargazers_count ?? fallback.stars,
+            forks: repo.forks_count ?? fallback.forks,
+          }
+        })
+
+        setProjects(fetchedProjects)
+      })
+    }, [])
 
 
 

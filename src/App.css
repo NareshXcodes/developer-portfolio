@@ -2,12 +2,12 @@
    Removed 5 separate @import url() calls that were render-blocking. */
 
 .PrimaryFont {
-  font-family: 'Silkscreen', 'Playfair Display', 'Montserrat', serif;
+  font-family: 'Redaction 50', serif;
   font-style: normal;
 }
 
 .SecondaryFont {
-  font-family: 'Manrope', 'Roboto Flex', sans-serif;
+  font-family: 'Instrument Serif', Georgia, serif;
 }
 
 *{
