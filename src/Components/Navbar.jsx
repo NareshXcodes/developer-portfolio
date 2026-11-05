@@ -55,7 +55,26 @@ const Navbar = () => {
     e.preventDefault()
     const element = document.querySelector(url)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      const targetY = element.getBoundingClientRect().top + window.pageYOffset - 16
+      const startY = window.pageYOffset
+      const distance = targetY - startY
+      const duration = 350
+      let start = null
+
+      // Quintic easeOut for super-smooth, snappy arrival under 400ms
+      const easeOut = (t) => 1 - Math.pow(1 - t, 4)
+
+      const step = (timestamp) => {
+        if (!start) start = timestamp
+        const elapsed = timestamp - start
+        const progress = Math.min(elapsed / duration, 1)
+        window.scrollTo(0, startY + distance * easeOut(progress))
+        if (progress < 1) {
+          window.requestAnimationFrame(step)
+        }
+      }
+
+      window.requestAnimationFrame(step)
       setActiveTab(name)
     }
   }, [])

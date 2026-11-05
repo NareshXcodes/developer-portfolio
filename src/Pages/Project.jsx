@@ -153,7 +153,7 @@ const Project = () => {
       <div className="relative z-10 w-full max-w-7xl mx-auto flex-1 flex flex-col min-h-0">
         {/* Header */}
         <div className="text-center mb-2 md:mb-6 flex-shrink-0">
-          <h1 className="OrangeGradient text-3xl sm:text-4xl font-bold mb-2 md:mb-4 PrimaryFont tracking-wide">PROJECTS</h1>
+          <h1 className="BlueGradient text-3xl sm:text-4xl font-bold mb-2 md:mb-4 PrimaryFont tracking-wide">PROJECTS</h1>
           <p className="text-gray-300 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-4 SecondaryFont">
             Here are some of my recent projects. Click on any card to view the repository on GitHub.
           </p>

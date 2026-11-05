@@ -32,30 +32,30 @@ function App() {
           <motion.section 
             id="home" 
             className="snap-start"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
           >
             <Home />
           </motion.section>
           <motion.section 
             id="about" 
             className="snap-start"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
           >
             <About />
           </motion.section>
           <motion.section
             id="skills" 
             className="snap-start"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
           >
             <Suspense fallback={<SectionFallback />}>
               <Skill skills={SKILLS} />
@@ -64,10 +64,10 @@ function App() {
           <motion.section 
             id="projects" 
             className="snap-start"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
           >
             <Suspense fallback={<SectionFallback />}>
               <Project />
@@ -76,10 +76,10 @@ function App() {
           <motion.section 
             id="contact" 
             className="snap-start"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
           >
             <Suspense fallback={<SectionFallback />}>
               <Contact />
