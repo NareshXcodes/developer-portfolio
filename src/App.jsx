@@ -53,14 +53,9 @@ function App() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <section 
-              id="skills" 
-              className="snap-start"
-            >
-              <Suspense fallback={<SectionFallback />}>
-                <Skill skills={SKILLS} />
-              </Suspense>
-            </section>
+            <Suspense fallback={<SectionFallback />}>
+              <Skill skills={SKILLS} />
+            </Suspense>
           </motion.section>
           <motion.section 
             id="projects" 

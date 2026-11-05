@@ -4,6 +4,7 @@
 /* Smooth scrolling for the entire page */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 1rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -16,6 +17,7 @@ body {
   font-family: 'Silkscreen', 'Playfair Display', 'Montserrat', serif;
   background-color: #0a0a0a;
   color: white;
+  overscroll-behavior-y: none;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -28,5 +30,4 @@ body {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
-
 
