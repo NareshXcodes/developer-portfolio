@@ -1,34 +1,32 @@
-import React, { useRef, useCallback } from 'react'
-import { motion } from 'motion/react'
-import { FaGithub, FaExternalLinkAlt, FaStar, FaCodeBranch } from 'react-icons/fa'
+import React, { useRef, useState, useCallback } from 'react'
+import { FaGithub, FaExternalLinkAlt, FaStar, FaCodeBranch, FaFolder } from 'react-icons/fa'
 
 const ProjectCard = ({ 
   title, 
   description, 
   repoLink, 
   liveLink, 
-  image, 
   technologies, 
   stars, 
-  forks 
+  forks,
+  index = 0
 }) => {
-  const divRef = useRef(null)
+  const cardRef = useRef(null)
+  const [isHovered, setIsHovered] = useState(false)
 
-  // Direct CSS custom property updates — zero React re-renders from mousemove
   const handleMouseMove = useCallback((e) => {
-    const div = divRef.current
-    if (!div) return
-    const rect = div.getBoundingClientRect()
-    div.style.setProperty('--mx', `${e.clientX - rect.left}px`)
-    div.style.setProperty('--my', `${e.clientY - rect.top}px`)
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    cardRef.current.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`)
+    cardRef.current.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`)
   }, [])
 
   const handleMouseEnter = useCallback(() => {
-    if (divRef.current) divRef.current.style.setProperty('--spot-opacity', '1')
+    setIsHovered(true)
   }, [])
 
   const handleMouseLeave = useCallback(() => {
-    if (divRef.current) divRef.current.style.setProperty('--spot-opacity', '0')
+    setIsHovered(false)
   }, [])
 
   const handleCardClick = useCallback(() => {
@@ -39,126 +37,119 @@ const ProjectCard = ({
 
   return (
     <div
-      ref={divRef}
+      ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleCardClick}
-      className="relative flex h-full w-full min-w-[280px] sm:min-w-[340px] max-w-[340px] flex-col overflow-hidden rounded-2xl border border-white/5 bg-[#121214] p-6 cursor-pointer group hover:border-white/20 transition-colors duration-500 shadow-xl"
       style={{
-        '--mx': '0px',
-        '--my': '0px',
-        '--spot-opacity': '0',
+        '--mouse-x': '150px',
+        '--mouse-y': '150px',
       }}
+      className="relative group w-full sm:w-[320px] md:w-[360px] h-auto min-h-[300px] sm:h-[350px] sm:shrink-0 rounded-2xl p-[1px] cursor-pointer overflow-hidden transition-all duration-300"
     >
-      {/* Spotlight Effect — reads CSS custom properties, no React state */}
+      {/* Dynamic Glow Border layer following cursor */}
       <div
-        className="pointer-events-none absolute -inset-px transition duration-300"
+        className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-300 -z-10"
         style={{
-          opacity: 'var(--spot-opacity)',
-          background: `radial-gradient(500px circle at var(--mx) var(--my), rgba(255,255,255,0.06), transparent 40%)`,
+          opacity: isHovered ? 1 : 0.3,
+          background: isHovered
+            ? `radial-gradient(350px circle at var(--mouse-x) var(--mouse-y), rgba(255, 134, 96, 0.4), rgba(154, 51, 255, 0.25), transparent 65%)`
+            : 'rgba(255, 255, 255, 0.06)',
         }}
       />
-      
-      {/* Top and Bottom Gradient Lines */}
-      <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <div className="absolute bottom-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-      <div className="relative z-10 flex flex-col h-full">
-        {/* Project Image */}
-        {image && (
-          <div className="mb-5 rounded-xl overflow-hidden relative border border-white/5">
-            <div className="absolute inset-0 bg-gradient-to-t from-[#121214] to-transparent z-10 opacity-60 group-hover:opacity-20 transition-opacity duration-500" />
-            <img 
-              src={image} 
-              alt={title} 
-              loading="lazy"
-              className="w-full h-48 object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-            />
+      {/* Card Main Body */}
+      <div className="relative z-10 w-full h-full flex flex-col justify-between rounded-2xl bg-[#0e0e11]/90 backdrop-blur-xl border border-white/5 p-5 sm:p-6 group-hover:bg-[#121216]/95 transition-colors duration-300">
+        
+        {/* Inner Mouse Follow Spotlight Effect */}
+        <div
+          className="pointer-events-none absolute -inset-px rounded-2xl transition-opacity duration-300"
+          style={{
+            opacity: isHovered ? 0.7 : 0,
+            background: `radial-gradient(350px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.04), transparent 50%)`,
+          }}
+        />
+
+        {/* Top Header Section: Folder Badge + Number + External / GitHub Links */}
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-gray-400 group-hover:text-orange-400 group-hover:border-orange-500/30 group-hover:bg-orange-500/10 transition-all duration-300">
+                <FaFolder size={15} />
+              </div>
+              <span className="SecondaryFont text-xs tracking-widest text-gray-500 uppercase font-semibold">
+                0{index + 1}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {liveLink && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    window.open(liveLink, '_blank', 'noopener,noreferrer')
+                  }}
+                  title="Live Demo"
+                  className="p-2 rounded-xl bg-white/[0.03] border border-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-200"
+                >
+                  <FaExternalLinkAlt size={12} />
+                </button>
+              )}
+              <div
+                title="GitHub Repository"
+                className="p-2 rounded-xl bg-white/[0.03] border border-white/5 text-gray-400 group-hover:text-white group-hover:bg-white/10 transition-colors duration-200"
+              >
+                <FaGithub size={14} />
+              </div>
+            </div>
           </div>
-        )}
 
-        {/* Header */}
-        <div className="flex justify-between items-start mb-4 gap-2">
-          <h3 className="PrimaryFont text-2xl font-semibold tracking-tight text-white/90 group-hover:text-white transition-colors duration-300 line-clamp-2">
+          {/* Title */}
+          <h3 className="PrimaryFont text-xl sm:text-2xl font-bold text-white tracking-wide mb-2 line-clamp-1 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-orange-400 group-hover:to-pink-500 transition-all duration-300">
             {title}
           </h3>
-          <div className="flex space-x-2 mt-1 shrink-0">
-            <div className="p-2 rounded-full bg-white/5 hover:bg-white/15 transition-colors duration-200">
-              <FaGithub 
-                size={16} 
-                className="text-gray-400 group-hover:text-white transition-colors duration-200"
-              />
+
+          {/* Description */}
+          <p className="SecondaryFont text-gray-400 text-xs sm:text-sm leading-relaxed line-clamp-3">
+            {description}
+          </p>
+        </div>
+
+        {/* Bottom Section: Tech Stack Badges + Stats */}
+        <div className="pt-4 mt-4 border-t border-white/5 flex flex-col gap-3">
+          {technologies && technologies.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {technologies.slice(0, 3).map((tech, i) => (
+                <span
+                  key={i}
+                  className="SecondaryFont px-2.5 py-0.5 rounded-md text-[10px] sm:text-xs font-medium text-gray-300 bg-white/[0.03] border border-white/10 group-hover:border-white/20 transition-colors duration-200"
+                >
+                  {tech}
+                </span>
+              ))}
             </div>
-            {liveLink && (
-              <div 
-                className="p-2 rounded-full bg-white/5 hover:bg-white/15 transition-colors duration-200"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  window.open(liveLink, '_blank', 'noopener,noreferrer')
-                }}
-              >
-                <FaExternalLinkAlt 
-                  size={14} 
-                  className="text-gray-400 group-hover:text-blue-400 transition-colors duration-200"
-                />
+          )}
+
+          <div className="flex items-center justify-between text-xs text-gray-500 SecondaryFont pt-1">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5 hover:text-amber-400 transition-colors duration-200">
+                <FaStar size={12} />
+                <span>{stars ?? 0}</span>
               </div>
-            )}
+              <div className="flex items-center gap-1.5 hover:text-blue-400 transition-colors duration-200">
+                <FaCodeBranch size={12} />
+                <span>{forks ?? 0}</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1 text-gray-400 group-hover:text-white transition-colors duration-200 font-medium tracking-wider uppercase text-[11px]">
+              <span>View</span>
+              <span className="transform group-hover:translate-x-1 transition-transform duration-200">→</span>
+            </div>
           </div>
         </div>
 
-        {/* Description */}
-        <p className="SecondaryFont text-gray-400 text-sm mb-6 leading-relaxed flex-grow">
-          {description || 'Click to view this project on GitHub'}
-        </p>
-
-        {/* Technologies */}
-        {technologies && technologies.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-6">
-            {technologies.slice(0, 3).map((tech, index) => (
-              <span 
-                key={index}
-                className="SecondaryFont px-3 py-1.5 bg-white/5 text-gray-300 text-xs font-medium rounded-md border border-white/5 backdrop-blur-md"
-              >
-                {tech}
-              </span>
-            ))}
-            {technologies.length > 3 && (
-              <span className="SecondaryFont px-3 py-1.5 bg-white/5 text-gray-400 text-xs font-medium rounded-md border border-white/5 backdrop-blur-md">
-                +{technologies.length - 3}
-              </span>
-            )}
-          </div>
-        )}
-
-        {/* Bottom Stats */}
-        <div className="flex justify-between items-center pt-5 border-t border-white/10 mt-auto">
-          <div className="flex items-center space-x-5">
-            {stars !== undefined && (
-              <div className="SecondaryFont flex items-center space-x-1.5 text-gray-400 group-hover:text-amber-400 transition-colors duration-300">
-                <FaStar size={14} />
-                <span className="text-sm font-medium">{stars}</span>
-              </div>
-            )}
-            {forks !== undefined && (
-              <div className="SecondaryFont flex items-center space-x-1.5 text-gray-400 group-hover:text-blue-400 transition-colors duration-300">
-                <FaCodeBranch size={14} />
-                <span className="text-sm font-medium">{forks}</span>
-              </div>
-            )}
-          </div>
-          <div className="SecondaryFont text-gray-500 group-hover:text-white transition-colors duration-300 flex items-center gap-1">
-            <span className="text-xs font-medium tracking-wider uppercase">Explore</span>
-            <motion.span 
-              className="inline-block"
-              initial={{ x: 0 }}
-              whileHover={{ x: 3 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              →
-            </motion.span>
-          </div>
-        </div>
       </div>
     </div>
   )
