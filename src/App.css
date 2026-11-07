@@ -41,3 +41,22 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.globe-spin {
+  transform-origin: 400px 400px;
+}
+
+@media (min-width: 640px) and (prefers-reduced-motion: no-preference) {
+  .globe-spin {
+    animation: globe-rotate 24s linear infinite;
+  }
+}
+
+@keyframes globe-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

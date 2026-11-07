@@ -35,13 +35,25 @@ const ProjectCard = ({
     }
   }, [repoLink])
 
+  const handleCardKeyDown = useCallback((event) => {
+    if (event.target !== event.currentTarget) return
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      handleCardClick()
+    }
+  }, [handleCardClick])
+
   return (
-    <div
+    <article
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleCardClick}
+      onKeyDown={handleCardKeyDown}
+      role="link"
+      tabIndex={repoLink ? 0 : -1}
+      aria-label={`View ${title} repository on GitHub`}
       style={{
         '--mouse-x': '150px',
         '--mouse-y': '150px',
@@ -90,6 +102,7 @@ const ProjectCard = ({
                     e.stopPropagation()
                     window.open(liveLink, '_blank', 'noopener,noreferrer')
                   }}
+                  aria-label={`Open live demo for ${title}`}
                   title="Live Demo"
                   className="p-2 rounded-xl bg-white/[0.03] border border-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-200"
                 >
@@ -98,6 +111,7 @@ const ProjectCard = ({
               )}
               <div
                 title="GitHub Repository"
+                aria-hidden="true"
                 className="p-2 rounded-xl bg-white/[0.03] border border-white/5 text-gray-400 group-hover:text-white group-hover:bg-white/10 transition-colors duration-200"
               >
                 <FaGithub size={14} />
@@ -151,7 +165,7 @@ const ProjectCard = ({
         </div>
 
       </div>
-    </div>
+    </article>
   )
 }
 

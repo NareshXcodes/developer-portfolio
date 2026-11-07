@@ -61,6 +61,8 @@ const Project = () => {
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-52%"])
 
   useEffect(() => {
+    const controller = new AbortController()
+
     const repoNames = [
       "ArchTrack",
       "Personal-Finance-Manager-API",
@@ -70,13 +72,18 @@ const Project = () => {
 
     Promise.allSettled(
       repoNames.map(async (repoName) => {
-        const response = await fetch(`https://api.github.com/repos/NareshXcodes/${repoName}`)
+        const response = await fetch(
+          `https://api.github.com/repos/NareshXcodes/${repoName}`,
+          { signal: controller.signal }
+        )
         if (!response.ok) {
           throw new Error(`GitHub returned ${response.status} for ${repoName}`)
         }
         return response.json()
       })
     ).then((results) => {
+      if (controller.signal.aborted) return
+
       const fetchedProjects = results.map((result, index) => {
         const fallback = PROJECTS[index]
         if (result.status === 'rejected' || !result.value?.name) {
@@ -103,6 +110,8 @@ const Project = () => {
 
       setProjects(fetchedProjects)
     })
+
+    return () => controller.abort()
   }, [])
 
   useEffect(() => {
@@ -135,7 +144,7 @@ const Project = () => {
       <div className="relative sm:sticky sm:top-0 min-h-screen sm:h-screen w-full flex flex-col justify-between overflow-hidden px-4 sm:px-0 pt-6 sm:pt-24 pb-8 sm:pb-14">
         
         {/* Background Ambience */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div
             className="absolute inset-0 opacity-40"
             style={{
@@ -144,11 +153,8 @@ const Project = () => {
             }}
           />
           
-          {/* Decorative Background Globe */}
-          <div className="absolute bottom-[-180px] left-1/2 w-[70vw] min-w-[320px] max-w-[700px] -translate-x-1/2 opacity-20 pointer-events-none">
-            <div className="relative w-full aspect-square">
-              {isVisible && <Globe className="max-w-none" />}
-            </div>
+          <div className="absolute bottom-[-1rem] left-1/2 aspect-square w-[100vw] max-w-[700px] -translate-x-1/2 opacity-20 pointer-events-none sm:bottom-0 sm:w-[420px] sm:max-w-[420px]">
+            <Globe className="pointer-events-auto" />
           </div>
         </div>
 
