@@ -4,52 +4,16 @@ import Globe from '../Components/Globe'
 import ProjectCard from '../Components/ProjectCard'
 
 const PROJECTS = [
-  {
-    name: 'ArchTrack',
-    title: 'ArchTrack',
-    description: 'An architectural decision records platform for engineering teams to capture, collaborate, and track technical architecture choices.',
-    repoLink: 'https://github.com/NareshXcodes/ArchTrack',
-    liveLink: '',
-    technologies: ['React', 'FastAPI', 'PostgreSQL'],
-    stars: 0,
-    forks: 0,
-  },
-  {
-    name: 'Personal-Finance-Manager-API',
-    title: 'Finance Manager API',
-    description: 'High-performance REST API for transaction management, budgets, categorisation, and expense tracking.',
-    repoLink: 'https://github.com/NareshXcodes/Personal-Finance-Manager-API',
-    liveLink: '',
-    technologies: ['FastAPI', 'Python', 'SQLAlchemy'],
-    stars: 0,
-    forks: 0,
-  },
-  {
-    name: 'developer-portfolio',
-    title: 'Developer Portfolio',
-    description: 'Modern developer portfolio featuring WebGL shaders, interactive components, and smooth micro-interactions.',
-    repoLink: 'https://github.com/NareshXcodes/developer-portfolio',
-    liveLink: '',
-    technologies: ['React', 'Tailwind', 'Vite'],
-    stars: 0,
-    forks: 0,
-  },
-  {
-    name: 'Orbital-Guardian',
-    title: 'Orbital Guardian',
-    description: 'Automated threat intelligence platform for monitoring security signals, incident logs, and vulnerability vectors.',
-    repoLink: 'https://github.com/NareshXcodes/Orbital-Guardian',
-    liveLink: '',
-    technologies: ['FastAPI', 'Python', 'AWS'],
-    stars: 0,
-    forks: 0,
-  },
+  'ArchTrack',
+  'Personal-Finance-Manager-API',
+  'developer-portfolio'
 ]
 
 const Project = () => {
   const containerRef = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
-  const [projects, setProjects] = useState(PROJECTS)
+  const [projects, setProjects] = useState([])
+  const [fetchError, setFetchError] = useState(false)
 
   // Track scroll position within this container for desktop horizontal sliding
   const { scrollYProgress } = useScroll({
@@ -63,15 +27,8 @@ const Project = () => {
   useEffect(() => {
     const controller = new AbortController()
 
-    const repoNames = [
-      "ArchTrack",
-      "Personal-Finance-Manager-API",
-      "developer-portfolio",
-      "Orbital-Guardian",
-    ]
-
     Promise.allSettled(
-      repoNames.map(async (repoName) => {
+      PROJECTS.map(async (repoName) => {
         const response = await fetch(
           `https://api.github.com/repos/NareshXcodes/${repoName}`,
           { signal: controller.signal }
@@ -84,30 +41,28 @@ const Project = () => {
     ).then((results) => {
       if (controller.signal.aborted) return
 
-      const fetchedProjects = results.map((result, index) => {
-        const fallback = PROJECTS[index]
-        if (result.status === 'rejected' || !result.value?.name) {
-          return fallback
-        }
-
-        const repo = result.value
-        return {
-          ...fallback,
-          title: repo.name.replace(/[-_]/g, ' '),
-          description: repo.description || fallback.description,
-          repoLink: repo.html_url || fallback.repoLink,
-          liveLink: repo.homepage || fallback.liveLink,
-          technologies: [
+      const fetchedProjects = results
+        .filter(result => result.status === 'fulfilled' && result.value?.name)
+        .map(result => {
+          const repo = result.value
+          const technologies = [
             repo.language,
-            ...(repo.topics || []).slice(0, 2)
-          ].filter(Boolean).length > 0
-            ? [repo.language, ...(repo.topics || []).slice(0, 2)].filter(Boolean)
-            : fallback.technologies,
-          stars: repo.stargazers_count ?? fallback.stars,
-          forks: repo.forks_count ?? fallback.forks,
-        }
-      })
+            ...(repo.topics || []).slice(0, 2),
+          ].filter(Boolean)
 
+          return {
+            name: repo.name,
+            title: repo.name.replace(/[-_]/g, ' '),
+            description: repo.description || 'No description available.',
+            repoLink: repo.html_url,
+            liveLink: repo.homepage || '',
+            technologies,
+            stars: repo.stargazers_count,
+            forks: repo.forks_count,
+          }
+        })
+
+      setFetchError(fetchedProjects.length !== PROJECTS.length)
       setProjects(fetchedProjects)
     })
 
@@ -170,6 +125,11 @@ const Project = () => {
           <p className="text-gray-400 text-xs sm:text-sm md:text-base max-w-xl mx-auto SecondaryFont leading-relaxed">
             Featured applications & backend systems built with modern scalability.
           </p>
+          {fetchError && (
+            <p className="mt-3 text-xs text-gray-500 SecondaryFont" role="status">
+              Some GitHub project details could not be loaded. Showing saved project information.
+            </p>
+          )}
         </div>
 
         {/* Desktop: Scroll-driven Horizontal Motion / Mobile: Clean Vertical Stack */}
