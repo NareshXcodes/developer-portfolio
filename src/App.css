@@ -14,6 +14,11 @@
     box-sizing: border-box;
 }
 
+.section-shell {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
 .PrimaryGradient{
   background : linear-gradient(120deg, #FF8660 10% , #9A33FF 100%);
   background-clip: text;

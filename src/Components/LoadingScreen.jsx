@@ -18,8 +18,8 @@ export default function LoadingScreen({ onDone }) {
     const id = setTimeout(() => {
       setStatus('done');
       // After the "Done" state is shown briefly, fade out and unmount
-      setTimeout(() => setVisible(false), 800);
-    }, 1200);
+      setTimeout(() => setVisible(false), 350);
+    }, 350);
 
     return () => clearTimeout(id);
   }, []);

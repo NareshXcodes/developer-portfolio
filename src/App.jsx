@@ -31,7 +31,7 @@ function App() {
         <main>
           <motion.section 
             id="home" 
-            className="snap-start"
+            className="snap-start section-shell"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
@@ -41,7 +41,7 @@ function App() {
           </motion.section>
           <motion.section 
             id="about" 
-            className="snap-start"
+            className="snap-start section-shell"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
@@ -51,7 +51,7 @@ function App() {
           </motion.section>
           <motion.section
             id="skills" 
-            className="snap-start"
+            className="snap-start section-shell"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
@@ -63,7 +63,7 @@ function App() {
           </motion.section>
           <motion.section 
             id="projects" 
-            className="snap-start"
+            className="snap-start section-shell"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
@@ -75,7 +75,7 @@ function App() {
           </motion.section>
           <motion.section 
             id="contact" 
-            className="snap-start"
+            className="snap-start section-shell"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}

@@ -25,6 +25,8 @@ const Project = () => {
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-52%"])
 
   useEffect(() => {
+    if (!isVisible) return undefined
+
     const controller = new AbortController()
 
     Promise.allSettled(
@@ -67,7 +69,7 @@ const Project = () => {
     })
 
     return () => controller.abort()
-  }, [])
+  }, [isVisible])
 
   useEffect(() => {
     if (typeof window === 'undefined' || isVisible) return
@@ -93,10 +95,10 @@ const Project = () => {
   return (
     <div
       ref={containerRef}
-      className="relative w-full sm:h-[260vh] bg-gradient-to-br from-[#0a0a0a] via-[#111114] to-[#0a0a0a] border-t border-white/5 py-20 sm:py-0"
+      className="relative w-full sm:h-[260vh] bg-gradient-to-br from-[#0a0a0a] via-[#111114] to-[#0a0a0a] border-t border-white/5"
     >
       {/* Container: normal flow on mobile, sticky full-screen viewport on desktop */}
-      <div className="relative sm:sticky sm:top-0 min-h-screen sm:h-screen w-full flex flex-col justify-between overflow-hidden px-4 sm:px-0 pt-6 sm:pt-24 pb-8 sm:pb-14">
+      <div className="relative sm:sticky sm:top-0 min-h-screen sm:h-screen w-full flex flex-col justify-between overflow-hidden px-4 pt-20 sm:px-0 sm:pt-24 pb-16 sm:pb-14">
         
         {/* Background Ambience */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">

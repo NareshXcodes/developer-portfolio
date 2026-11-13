@@ -62,6 +62,9 @@ const Globe = ({ className = '', config = GLOBE_CONFIG }) => {
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return undefined
+    if (window.matchMedia('(max-width: 639px), (pointer: coarse), (prefers-reduced-motion: reduce)').matches) {
+      return undefined
+    }
 
     const updateSize = () => {
       widthRef.current = canvas.offsetWidth
