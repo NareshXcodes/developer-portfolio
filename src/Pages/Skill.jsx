@@ -180,13 +180,16 @@ const Skill = ({ skills }) => {
                         className="flex flex-col items-center justify-center gap-2 w-20 h-20 sm:w-24 sm:h-24 rounded-xl border border-white/8 bg-white/[0.02] hover:bg-white/[0.06] hover:border-white/18 transition-all duration-200 group cursor-default"
                       >
                         <img
-                          src={`https://go-skill-icons.vercel.app/api/icons?i=${item.icon}&theme=${ICON_THEME}`}
+                          src={`https://skillicons.dev/icons?i=${item.icon}&theme=${ICON_THEME}`}
                           alt={item.icon}
                           width={36}
                           height={36}
                           loading="lazy"
                           decoding="async"
                           className="w-8 h-8 sm:w-9 sm:h-9 object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-200"
+                          onError={(event) => {
+                            event.currentTarget.style.display = "none";
+                          }}
                         />
                         <span className="SecondaryFont text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-gray-500 group-hover:text-gray-300 transition-colors duration-200 text-center leading-none px-1">
                           {item.icon.replace(/-/g, " ")}
