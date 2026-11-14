@@ -1,14 +1,12 @@
-import React, { lazy, Suspense, useState } from 'react'
+import React, { lazy, Suspense } from 'react'
 import { motion } from 'motion/react'
 import './App.css'
 import Navbar from './Components/Navbar.jsx';
 import Footer from './Components/Footer.jsx';
 import Home from './Pages/Home.jsx';
 import About from './Pages/About.jsx';
-import LoadingScreen from './Components/LoadingScreen.jsx';
 
-// Code-split below-the-fold sections — defers loading cobe (WebGL),
-// BounceCards, and other heavy components until they're needed.
+// Code-split below-the-fold sections until they're needed.
 const Skill = lazy(() => import('./Pages/Skill.jsx'))
 const Project = lazy(() => import('./Pages/Project.jsx'))
 const Contact = lazy(() => import('./Pages/Contact.jsx'))
@@ -21,11 +19,8 @@ const SectionFallback = () => (
 )
 
 function App() {
-  const [appReady, setAppReady] = useState(false);
-
   return (
     <>
-      {!appReady && <LoadingScreen onDone={() => setAppReady(true)} />}
       <Navbar />
       <div className="w-full min-h-screen overflow-clip bg-[#0a0a0a] text-white">
         <main>

@@ -4,15 +4,18 @@ const GradientASCII = lazy(() => import("./GradientASCII.jsx"));
 
 const HomeBackground = ({ children }) => {
   const [showEffect, setShowEffect] = useState(false);
+  const [isConstrained, setIsConstrained] = useState(false);
 
   useEffect(() => {
-    const isConstrained = window.matchMedia(
+    const constrainedDevice = window.matchMedia(
       '(max-width: 639px), (pointer: coarse), (prefers-reduced-motion: reduce)'
     ).matches;
+    const reducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
 
-    if (!isConstrained) {
-      setShowEffect(true);
-    }
+    setIsConstrained(constrainedDevice);
+    setShowEffect(!reducedMotion);
   }, []);
 
   return (
@@ -24,23 +27,24 @@ const HomeBackground = ({ children }) => {
               colors={["#1e3fd8", "#f6f8ff", "#a5d8ff", "#38bdf8"]}
               shape="horizon"
               characters=" =+xX0S8#@"
-              cellSize={18}
-              density={0.8}
-              glyphOpacity={0.85}
-              glow={0.2}
+              cellSize={isConstrained ? 26 : 18}
+              density={isConstrained ? 0.55 : 0.8}
+              glyphOpacity={isConstrained ? 0.65 : 0.85}
+              glow={isConstrained ? 0.05 : 0.2}
               depthOfField={0}
-              flicker={0.2}
+              flicker={isConstrained ? 0.05 : 0.2}
               softness={0.5}
               scale={1}
-              flow={0.5}
-              speed={1}
-              gradientOpacity={0.9}
-              grain={0.08}
+              flow={isConstrained ? 0.25 : 0.5}
+              speed={isConstrained ? 0.5 : 1}
+              gradientOpacity={isConstrained ? 0.7 : 0.9}
+              grain={isConstrained ? 0.02 : 0.08}
               variation={0}
               mouseInteraction={false}
               scrambleRadius={0.1}
               clickEffect="wave"
               intro
+              dpr={isConstrained ? 1 : undefined}
               lightMode={false}
             />
           </div>

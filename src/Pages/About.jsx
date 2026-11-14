@@ -1,6 +1,6 @@
 import React from "react";
 import ExpCard from './../Components/ExperiencCard.jsx';
-import awsLogo from './../assets/aws-logo.png';
+import awsLogo from './../assets/aws-logo.webp';
 import { GitHubCalendar } from 'react-github-calendar';
 
 const expCards = [

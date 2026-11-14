@@ -1,5 +1,5 @@
 import React from "react";
-import avatar from "./../assets/avatar.jpeg";
+import avatar from "./../assets/avatar.webp";
 import HomeBackground from './../Components/HomeBackground.jsx';
 
 const Home = () => {

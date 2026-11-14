@@ -1,43 +1,42 @@
 import React from 'react'
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaCodepen, FaStackOverflow } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaCodepen } from 'react-icons/fa'
 
 const Contact = () => {
   const socialLinks = [
     {
       icon: <FaEnvelope />,
       label: "Email",
-      link: "mailto:codes.xdev@gmail.com", // Replace with your actual email
-      username: "naresh.mahapatra@example.com"
+      link: "mailto:codes.xdev@gmail.com",
+      username: "codes.xdev@gmail.com",
+      external: false,
     },
     {
       icon: <FaGithub />,
       label: "GitHub",
       link: "https://github.com/NareshXcodes",
-      username: "@NareshXcodes"
+      username: "@NareshXcodes",
+      external: true,
     },
     {
       icon: <FaLinkedin />,
       label: "LinkedIn",
       link: "https://linkedin.com/in/naresh-mahapatra", // Replace with your LinkedIn
-      username: "naresh-mahapatra"
+      username: "naresh-mahapatra",
+      external: true,
     },
     {
       icon: <FaTwitter />,
       label: "Twitter",
       link: "https://twitter.com/nareshxcodes", // Replace with your Twitter
-      username: "@nareshxcodes"
+      username: "@nareshxcodes",
+      external: true,
     },
     {
       icon: <FaCodepen />,
       label: "CodePen",
       link: "https://codepen.io/nareshxcodes", // Replace with your CodePen
-      username: "@nareshxcodes"
-    },
-    {
-      icon: <FaStackOverflow />,
-      label: "Stack Overflow",
-      link: "https://stackoverflow.com/users/your-id", // Replace with your Stack Overflow
-      username: "naresh-mahapatra"
+      username: "@nareshxcodes",
+      external: true,
     }
   ]
 
@@ -57,13 +56,14 @@ const Contact = () => {
 
         {/* Social Links - Simple Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-4 pr-2 flex-1 items-start content-start">
-          {socialLinks.map((social, index) => (
+          {socialLinks.map((social) => (
             <a
-              key={index}
+              key={social.label}
               href={social.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 sm:gap-4 p-4 sm:p-6 border-l-4 border-blue-500 hover:border-orange-500 transition-colors duration-300 group bg-white/[0.02] rounded-r-lg"
+              target={social.external ? "_blank" : undefined}
+              rel={social.external ? "noopener noreferrer" : undefined}
+              aria-label={`${social.label}: ${social.username}`}
+              className="flex min-h-11 items-center gap-3 sm:gap-4 p-4 sm:p-6 border-l-4 border-blue-500 hover:border-orange-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 transition-colors duration-300 group bg-white/[0.02] rounded-r-lg"
             >
               <div className="text-2xl text-gray-400 group-hover:text-white transition-colors duration-300">
                 {social.icon}

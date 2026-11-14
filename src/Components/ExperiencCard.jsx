@@ -54,7 +54,7 @@ const ExperiencCard = ({ title, company, time, description }) => {
       {/* Content */}
       <div className="relative z-10 flex items-center gap-4 mb-6 w-full">
         <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-white/5 border border-white/10 flex items-center justify-center p-2 group-hover:scale-105 group-hover:border-white/20 transition-all duration-500 shadow-xl backdrop-blur-sm">
-          <img src={company} className="w-full h-full rounded-xl object-contain drop-shadow-md" alt={`${title} logo`} />
+          <img src={company} loading="lazy" decoding="async" width="56" height="56" className="w-full h-full rounded-xl object-contain drop-shadow-md" alt={`${title} logo`} />
         </div>
         <div className="flex flex-col flex-1 min-w-0">
           <h1 className="PrimaryFont text-white font-bold text-lg sm:text-xl truncate tracking-wide group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-orange-400 group-hover:to-pink-500 transition-all duration-300">{title}</h1>

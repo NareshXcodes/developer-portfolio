@@ -91,7 +91,7 @@ const Navbar = () => {
               key={item.name}
               href={item.url}
               onClick={(e) => scrollToSection(e, item.url, item.name)}
-              className={`relative cursor-pointer flex flex-col items-center justify-center text-[10px] sm:text-sm font-semibold px-3 sm:px-4 py-2.5 sm:py-2.5 rounded-full transition-colors duration-300 shrink-0 ${
+              className={`relative cursor-pointer flex min-h-11 min-w-11 flex-col items-center justify-center text-[10px] sm:text-sm font-semibold px-3 sm:px-4 py-2.5 sm:py-2.5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 transition-colors duration-300 shrink-0 ${
                 isActive ? 'text-[#FF8660]' : 'text-white/60 hover:text-white hover:bg-white/5'
               }`}
             >

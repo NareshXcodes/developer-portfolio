@@ -6,12 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "check": "npm run lint && npm run build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
-    "cobe": "^0.6.4",
     "motion": "^11.0.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -21,10 +21,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
-    "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^5.0.0",
-    "baseline-browser-mapping": "^2.11.35",
     "eslint": "^9.33.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",

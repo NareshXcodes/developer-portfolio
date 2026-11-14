@@ -29,36 +29,17 @@ const ProjectCard = ({
     setIsHovered(false)
   }, [])
 
-  const handleCardClick = useCallback(() => {
-    if (repoLink) {
-      window.open(repoLink, '_blank', 'noopener,noreferrer')
-    }
-  }, [repoLink])
-
-  const handleCardKeyDown = useCallback((event) => {
-    if (event.target !== event.currentTarget) return
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault()
-      handleCardClick()
-    }
-  }, [handleCardClick])
-
   return (
     <article
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onClick={handleCardClick}
-      onKeyDown={handleCardKeyDown}
-      role="link"
-      tabIndex={repoLink ? 0 : -1}
-      aria-label={`View ${title} repository on GitHub`}
       style={{
         '--mouse-x': '150px',
         '--mouse-y': '150px',
       }}
-      className="relative group w-full sm:w-[320px] md:w-[360px] h-auto min-h-[300px] sm:h-[350px] sm:shrink-0 rounded-2xl p-[1px] cursor-pointer overflow-hidden transition-all duration-300"
+      className="relative group w-full min-h-[300px] rounded-2xl p-[1px] overflow-hidden transition-all duration-300"
     >
       {/* Dynamic Glow Border layer following cursor */}
       <div
@@ -97,31 +78,40 @@ const ProjectCard = ({
 
             <div className="flex items-center gap-2">
               {liveLink && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    window.open(liveLink, '_blank', 'noopener,noreferrer')
-                  }}
+                <a
+                  href={liveLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={`Open live demo for ${title}`}
                   title="Live Demo"
-                  className="p-2 rounded-xl bg-white/[0.03] border border-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-200"
+                  className="min-h-11 min-w-11 flex items-center justify-center rounded-xl bg-white/[0.03] border border-white/5 text-gray-400 hover:text-white hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 transition-colors duration-200"
                 >
                   <FaExternalLinkAlt size={12} />
-                </button>
+                </a>
               )}
-              <div
+              <a
+                href={repoLink}
+                target="_blank"
+                rel="noopener noreferrer"
                 title="GitHub Repository"
-                aria-hidden="true"
-                className="p-2 rounded-xl bg-white/[0.03] border border-white/5 text-gray-400 group-hover:text-white group-hover:bg-white/10 transition-colors duration-200"
+                aria-label={`Open ${title} GitHub repository`}
+                className="min-h-11 min-w-11 flex items-center justify-center rounded-xl bg-white/[0.03] border border-white/5 text-gray-400 group-hover:text-white group-hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 transition-colors duration-200"
               >
                 <FaGithub size={14} />
-              </div>
+              </a>
             </div>
           </div>
 
           {/* Title */}
           <h3 className="PrimaryFont text-xl sm:text-2xl font-bold text-white tracking-wide mb-2 line-clamp-1 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-orange-400 group-hover:to-pink-500 transition-all duration-300">
-            {title}
+            <a
+              href={repoLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+            >
+              {title}
+            </a>
           </h3>
 
           {/* Description */}
@@ -157,10 +147,16 @@ const ProjectCard = ({
               </div>
             </div>
 
-            <div className="flex items-center gap-1 text-gray-400 group-hover:text-white transition-colors duration-200 font-medium tracking-wider uppercase text-[11px]">
+            <a
+              href={repoLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View ${title} repository`}
+              className="flex items-center gap-1 text-gray-400 group-hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 transition-colors duration-200 font-medium tracking-wider uppercase text-[11px] rounded-sm"
+            >
               <span>View</span>
               <span className="transform group-hover:translate-x-1 transition-transform duration-200">→</span>
-            </div>
+            </a>
           </div>
         </div>
 
