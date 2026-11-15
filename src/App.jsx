@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react'
-import { motion } from 'motion/react'
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react'
 import './App.css'
 import Navbar from './Components/Navbar.jsx';
 import Footer from './Components/Footer.jsx';
@@ -18,68 +18,92 @@ const SectionFallback = () => (
   <div className="min-h-screen w-full bg-[#0a0a0a]" />
 )
 
+const ScrollAtmosphere = () => {
+  const prefersReducedMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll()
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 28,
+    mass: 0.25,
+  })
+  const glowPosition = useTransform(progress, [0, 1], ['18% 12%', '82% 88%'])
+  const glowBackground = useTransform(
+    glowPosition,
+    (position) => `radial-gradient(circle at ${position}, rgba(154, 51, 255, 0.13), transparent 34%)`
+  )
+
+  if (prefersReducedMotion) return null
+
+  return (
+    <div className="scroll-atmosphere" aria-hidden="true">
+      <motion.div
+        className="scroll-atmosphere__glow"
+        style={{
+          background: glowBackground,
+        }}
+      />
+      <motion.div
+        className="scroll-atmosphere__progress"
+        style={{ scaleX: progress }}
+      />
+    </div>
+  )
+}
+
+const ScrollSection = ({ id, children }) => {
+  const sectionRef = React.useRef(null)
+  const prefersReducedMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  })
+  const depth = useTransform(scrollYProgress, [0, 0.5, 1], [0.985, 1, 0.985])
+  const opacity = useTransform(scrollYProgress, [0, 0.18, 0.82, 1], [0.76, 1, 1, 0.76])
+
+  return (
+    <motion.section
+      ref={sectionRef}
+      id={id}
+      className="snap-start section-shell"
+      initial={{ y: 16 }}
+      whileInView={{ y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
+      style={prefersReducedMotion ? undefined : { scale: depth, opacity }}
+    >
+      {children}
+    </motion.section>
+  )
+}
+
 function App() {
   return (
     <>
       <Navbar />
+      <ScrollAtmosphere />
       <div className="w-full min-h-screen overflow-clip bg-[#0a0a0a] text-white">
         <main>
-          <motion.section 
-            id="home" 
-            className="snap-start section-shell"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-          >
+          <ScrollSection id="home">
             <Home />
-          </motion.section>
-          <motion.section 
-            id="about" 
-            className="snap-start section-shell"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-          >
+          </ScrollSection>
+          <ScrollSection id="about">
             <About />
-          </motion.section>
-          <motion.section
-            id="skills" 
-            className="snap-start section-shell"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-          >
+          </ScrollSection>
+          <ScrollSection id="skills">
             <Suspense fallback={<SectionFallback />}>
               <Skill skills={SKILLS} />
             </Suspense>
-          </motion.section>
-          <motion.section 
-            id="projects" 
-            className="snap-start section-shell"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-          >
+          </ScrollSection>
+          <ScrollSection id="projects">
             <Suspense fallback={<SectionFallback />}>
               <Project />
             </Suspense>
-          </motion.section>
-          <motion.section 
-            id="contact" 
-            className="snap-start section-shell"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-          >
+          </ScrollSection>
+          <ScrollSection id="contact">
             <Suspense fallback={<SectionFallback />}>
               <Contact />
             </Suspense>
-          </motion.section>
+          </ScrollSection>
         </main>
         <Footer />
       </div>

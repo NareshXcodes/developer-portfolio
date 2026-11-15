@@ -31,6 +31,34 @@
 .section-shell {
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+.scroll-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.scroll-atmosphere__glow {
+  position: absolute;
+  inset: -20%;
+  opacity: 0.8;
+  filter: blur(30px);
+}
+
+.scroll-atmosphere__progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  transform-origin: left center;
+  background: linear-gradient(90deg, #ff8660, #9a33ff 55%, #5badff);
+  box-shadow: 0 0 18px rgba(154, 51, 255, 0.7);
 }
 
 .PrimaryGradient{

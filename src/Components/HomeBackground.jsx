@@ -28,9 +28,9 @@ const HomeBackground = ({ children }) => {
               shape="horizon"
               characters=" =+xX0S8#@"
               cellSize={isConstrained ? 26 : 18}
-              density={isConstrained ? 0.55 : 0.8}
+              density={isConstrained ? 0.6 : 0.8}
               glyphOpacity={isConstrained ? 0.65 : 0.85}
-              glow={isConstrained ? 0.05 : 0.2}
+              glow={isConstrained ? 0.1 : 0.2}
               depthOfField={0}
               flicker={isConstrained ? 0.05 : 0.2}
               softness={0.5}
