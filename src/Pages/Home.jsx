@@ -1,5 +1,5 @@
 import React from "react";
-import avatar from "./../assets/avatar.webp";
+import avatar from "./../assets/avatar.jpeg";
 import HomeBackground from './../Components/HomeBackground.jsx';
 
 const Home = () => {
@@ -36,11 +36,11 @@ const Home = () => {
                 <img
                   src={avatar}
                   alt="Naresh Mahapatra"
-                  width="480"
-                  height="480"
+                  width="580"
+                  height="580"
                   fetchPriority="high"
                   decoding="async"
-                  className="w-32 h-32 sm:w-48 sm:h-48 lg:h-[36vh] lg:w-[36vh] rounded-full object-cover shadow-2xl ring-4 ring-white/5"
+                  className="w-40 h-40 sm:w-48 sm:h-48 lg:h-[36vh] lg:w-[36vh] rounded-full object-cover shadow-2xl ring-4 ring-white/5"
                 />
               </div>
             </div>
